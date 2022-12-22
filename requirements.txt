@@ -1,0 +1,2 @@
+npm install --save vue@next && npm install --save-dev vue-loader@next
+npm install read-excel-file --save
