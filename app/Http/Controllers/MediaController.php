@@ -188,7 +188,7 @@ class MediaController extends Controller
         $filepath = $dir.'/'.$upload_file;
         $url = Storage::url($filepath);
         $domain = request()->getSchemeAndHttpHost();
-        $url = $domain.$url;
+        $url = $url;
         if (!$fileexist['status']) {
             $data=[
                 'status' => true,

@@ -369,3 +369,9 @@ Route::get('/noaccess', [PageAccessController::class, 'NoAccess'])->name('NoAcce
 Route::get('/getroutes', [PageAccessController::class, 'getRoutes'])->name('get_all_routes');
 Route::get('/pagenotfound', [PageAccessController::class, 'pageNotFound'])->name('pageNotFound');
 
+Route::get('resetlink', function (){
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+});

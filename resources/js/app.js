@@ -70,7 +70,7 @@ Vue.component('flyout-notification', require('./components/layouts/backend-heade
 
 // Signup Controller
 Vue.component('signup-guide', require('./components/auths/signin.vue').default);
-Vue.component('signup', require('./components/application/newrecord.vue').default);
+Vue.component('signup', require('./components/signup/newrecord.vue').default);
 Vue.component('signup-verify', require('./components/auths/signin.vue').default);
 
 // Dashboard Controller

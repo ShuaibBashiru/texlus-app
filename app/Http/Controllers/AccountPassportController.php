@@ -88,7 +88,7 @@ class AccountPassportController extends Controller
                 $filepath = $dir.'/'.$upload_file;
                 $url = Storage::url($filepath);
         $domain = request()->getSchemeAndHttpHost();
-        $url = $domain.$url;
+        $url = $url;
                 $size = Storage::size($filepath);
                 $dimensions = getimagesize($file);
                 $userData = $this->getData($userid);
