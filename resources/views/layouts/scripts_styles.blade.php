@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="<?php echo asset('css/style.css')?>" type="text/css"> 
 
 <!-- Scripts -->
-<script src="{{ asset('js/jquery.js'), 'site'}}"></script>
-<script src="{{ asset('js/app.js'), 'site'}}" defer></script>
-<script src="{{ asset('js/script.js', 'site')}}"></script>
-<script src="{{ asset('js/sweetalert.js', 'site')}}"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ mix('js/app.js') }}" defer></script>
+<script src="{{ asset('js/script.js') }}"></script>
+<script src="{{ asset('js/sweetalert.js') }}"></script>
