@@ -56,7 +56,7 @@ use App\Http\Controllers\SalesItemsController;
 // Check maintenance
 Route::get('/app/maintenance', [SettingController::class, 'maintenance'])->name('maintenance');
 
-Route::group(['middleware'=>['revalidate', 'CheckMaintenance']], function(){
+Route::group(['middleware'=>['revalidate']], function(){
     // Home controller
     Route::get('', [HomeController::class, 'web'])->name('home');
     Route::get('/contactus', [HomeController::class, 'contact'])->name('contactus');
