@@ -20,9 +20,8 @@
         <!-- Body component(s) -->
             <div id="contentPanel" class="col-md-10 p-0 mt-5">
             <div class="mb-5 mt-4">
-                
            <user_profile :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"> </user_profile>
-    </div>
+        </div>
 
        </div>
 

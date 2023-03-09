@@ -6,14 +6,14 @@
         <div class="border rounded-3 p-1 pt-0 pb-0">
           <div class="row m-0 p-0 pb-1 pt-1">
               <div class="col-md-4">
-            <h6 class="m-0 pt-2" v-text="chartOptions.chartTitle"></h6> 
+            <h6 class="m-0 pt-2 mb-2 mt-2" v-text="chartOptions.chartTitle"></h6> 
           </div>
                <div class="col-md-4">
-                  <p class="fs-5 m-0 text-center"><span class="text-muted bolder">Total: </span> <span class="fs-4" v-text="info.length"></span></p>
+                  <p class="fs-5 m-0 mb-2 mt-2 text-center"><span class="text-muted bolder">Total: </span> <span class="fs-4" v-text="info.length"></span></p>
             </div>
               <div class="col-md-4 pe-0 dropdown">
-            <button class="btn btn-primary float-end pt-1 pb-1" data-bs-toggle="dropdown" aria-expanded="false">Actions</button> 
-            <button class="btn float-end me-2 pt-1 pb-1 btn-outline-primary" @click="getRecords"><i class="bi-arrow-clockwise"></i> 
+            <button class="btn btn-primary float-end me-2 mb-2 mt-2 pt-1 pb-1" data-bs-toggle="dropdown" aria-expanded="false">Actions</button> 
+            <button class="btn float-end me-2 mb-2 mt-2 pt-1 pb-1 btn-outline-primary" @click="getRecords"><i class="bi-arrow-clockwise"></i> 
             <span v-text="button"> </span> <span v-if="loadStatus=='load'" class="spinner-border spinner-border-sm text-primary"></span>
             </button> 
         <div class="dropdown-menu w-75 mt-0 pt-0" style="width: 200px !important;">
@@ -24,7 +24,7 @@
         <div class="collapse" id="drop3">
         <ul class="btn-toggle-nav ms-2 list-unstyled fw-normal pb-1 small">
         <li class="p-1">
-           <select v-model="parameters.year" class="form-control shadow-none" @change="plotChart">
+           <select v-model="selectedDate" class="form-control shadow-none" @change="plotChart">
                 <option value="" selected>Select</option>
                 <option v-for="(d, index) in years" :value="d" :key="index" v-text="'Year '+d"></option>
             </select>
@@ -50,7 +50,7 @@
             <h6 class="m-0 pt-2 pb-2" v-text="chartOptions.summary.header +' ('+parameters.year+')'"></h6> 
           </div>
               <div class="col-md-4">
-                <h6 class="m-0 pt-2 pb-2 float-end"> <span class="">Total in <span class="fs-6" v-text="parameters.year"></span>: </span> <span class="fs-6" v-text="selectionTotal"></span> </h6>
+                <h6 class="m-0 pt-2 pb-2 float-end"> <span class="">Total in <span class="fs-6" v-text="parameters.year"></span>: </span> <span class="fs-5 fw-bolder" v-text="selectionTotal"></span> </h6>
               </div>
       </div>
 

@@ -8,7 +8,7 @@
         <div class="row">
         <div class="col-md-5 ps-2">
         <div class="mt-1 mb-2">
-            <h5 class="mt-2 ms-0"> <span class="bi bi-chevron-left" onclick="history.back()" role="button"></span> <span>Manage</span><span class="text-muted">/Admin </span> </h5>
+            <h5 class="mt-2 ms-0"> <span class="bi bi-chevron-left" onclick="history.back()" role="button"></span> <span>Manage</span><span class="text-muted">/admin </span> </h5>
         </div>
         </div>
         <div class="col-md-7 d-flex justify-content-end dropdown pe-1">

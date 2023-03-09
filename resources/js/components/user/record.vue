@@ -113,6 +113,7 @@
             <th scope="col" class="text-truncate" @click="sortOrder('status_id')" title="Status"> Status <i class="bi bi-sort-down float-end"></i></th>
             <th scope="col" class="text-truncate" @click="sortOrder('createdByName')"> Created by </th>
             <th scope="col" class="text-truncate text-center" title="Action"> Manage </th>
+            <th scope="col" class="text-truncate text-center" title="Action"> <i class="bi bi-person-circle"></i> </th>
         </tr>
         </thead>
         <tbody>
@@ -126,7 +127,10 @@
             <td class="text-center" v-else><span class="text-danger" v-text="d.status_name"></span></td>
             <td class=""><span class="" v-text="d.createdByName"></span></td>
             <td class="text-center">
-            <a class="link btn btn-sm btn-primary" :href="'profile/'+encodeData(d.generated_id)"> <span class="bi bi-gear"></span></a>
+            <a class="link btn btn-sm btn-primary" :href="'manage/'+encodeData(d.generated_id)"> <span class="bi bi-gear"></span></a>
+            </td>
+            <td class="text-center">
+            <a class="link btn btn-sm btn-success" :href="'profile/'+encodeData(d.generated_id)"> <span class="bi bi-eye"></span></a>
             </td>
         </tr>
             
@@ -186,7 +190,6 @@ export default {
         counter: '0',
         disabled: false,
         validated: false,
-        search: '',
         checks: [],
         statuses: [],
         parameters:{
@@ -391,7 +394,7 @@ export default {
     getStatus: function(){
         $(".toaster").toast('hide')
         this.showOverlay=true;
-        axios.get('/status/list', {params:this.parameters}).then(response => {
+        axios.get('/api/status/list', {params:this.parameters}).then(response => {
             this.button=this.btntxt;
             this.showOverlay=false;
             this.errors = '';

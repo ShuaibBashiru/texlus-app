@@ -6,6 +6,7 @@ use App\Http\Controllers\PostApiController;
 use App\Http\Controllers\CourseApiController;
 use App\Http\Controllers\MenuApiController;
 use App\Http\Controllers\NotificationApiController;
+use App\Http\Controllers\StatusesApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,4 @@ Route::get('/course/info/{category}', [CourseApiController::class, 'showAllInCat
 Route::get('/course/info/{category}/{title}', [CourseApiController::class, 'showByTitle']);
 Route::get('/menu', [MenuApiController::class, 'menuList']);
 Route::get('/notification/list', [NotificationApiController::class, 'notifications']);
+Route::get('/status/list', [StatusesApiController::class, 'listAll']);

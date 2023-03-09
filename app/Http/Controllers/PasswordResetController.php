@@ -10,6 +10,8 @@ use App\Models\Admin;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 use dateTime;
 
 class PasswordResetController extends Controller
@@ -127,12 +129,13 @@ class PasswordResetController extends Controller
    }
 
    public function fileInfo(){
-      $filepath = base_path()."/resources/js/components/json/myapp.json";
+      $filepath = Storage::path('public/settings/app.json');
       $json = json_decode(file_get_contents($filepath), true);
-      $settings = $json['settings'];
+      $settings = $json;
       return $settings;
   }
   
+
    public function mailing(PasswordResetRequest $request){
       try {
          $fileInfo=$this->fileInfo();
@@ -144,8 +147,8 @@ class PasswordResetController extends Controller
             "descriptions" => '',
             "messageType" => 'Password Reset',
             "_token" => $this->generateRandom(),
-            "mailFrom" => $fileInfo['passwordResetMail'],
-            "mailFromName" => $fileInfo['companyName'],
+            "mailFrom" => $fileInfo['mailing_address'],
+            "mailFromName" => $fileInfo['site_name'],
             "user_email" => $request->input('email_id'),
             "mailToName" => '',
             "generated_id" => str_shuffle($d->format('Ymdhis')),

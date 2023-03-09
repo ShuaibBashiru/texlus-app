@@ -2,6 +2,13 @@
 <div class="">
     <b-overlay class="position-fixed w-100 h-100" :show="showOverlay" no-wrap spinner-variant="primary" rounded="sm" spinner-type="border" z-index="999999" />
     <notification :alertTitle="alertTitle" :alertMsg="alertMsg" />  
+
+    <div class="text-center position-absolute end-50 top-50" v-if="loader">
+        <div class="spinner-border text-warning" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
 <div class="container-fluid mt-3 pb-5" v-if="info.length>0">
 <div class="row">
 <div class="col-md-11 m-auto">
@@ -41,7 +48,7 @@
 }
 </style>
 <script>
-import appsettings from '/storage/settings/app.json'
+
 export default {
   name: 'Team',
     data (){
@@ -53,8 +60,9 @@ export default {
         progress: null,
         record:false,
         responseStatus: '',
+        loader: false,
         errors: [],
-        settings:appsettings,
+        settings: '',
         content_header: {
             header_title: "Our Team",
             header_text: '',
@@ -81,26 +89,39 @@ export default {
     },
 
     created(){
+        this.getAppSettings();
         this.getInfo();
     }, 
     methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+     },
     getInfo: function(){
+        this.loader = true;
         var category = this.parameters.category
         axios.get('/api/post/info/'+category, {params:this.parameters}).then(response => {
             this.errors = '';
             if(response.status != undefined && response.status==200 && response['data'].data.status=='success'){
             this.info = response['data'].data.info
+            this.loader = false;
             }else if(response['data'].data.status=='norecord'){
             this.category_list = ''
             this.alertMsg=''
+            this.loader = false;
             }else{
             this.alertMsg=response['data'].data.msg;
             $("#alertDanger").toast('show')
+            this.loader = false;
             }
         }).catch(error => {
             this.errors = '';
             this.alertMsg='Something went wrong while fetching some content, please refresh and try again or report this error.';
             $("#alertDanger").toast('show')
+            this.loader = false;
         })
     },
     },

@@ -68,7 +68,7 @@ class CourseApiController extends Controller
                     ->where('t1.deleted_status', '=', 0)
                     ->where('t1.status_name', '=', 'Active')
                     ->where('t1.category_name', $category)
-                    ->where('t1.post_title', $title)
+                    ->where('t1.item_title', $title)
                     ->leftJoin('statuses as t2', 't2.id', '=', 't1.status_id')
                     ->get(['t1.*'])->first();
 

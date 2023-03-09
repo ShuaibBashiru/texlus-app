@@ -73,7 +73,7 @@
 
 <script>
 export default {
-    name: 'Role_New',
+    name: 'Role_new',
     props: ['server_record', 'server_message'],
     data (){
         return{

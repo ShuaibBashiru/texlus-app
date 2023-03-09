@@ -149,16 +149,16 @@ height: 60px;
 
 .dp-small{
   border-radius:50%;
-  width: 35px;
+  width: 34px;
   height: 34px;
   background-image: url('../assets/passports/avatar.png');
-  background-size: 35px 35px;
+  background-size: 38px 38px;
   background-repeat: no-repeat;
   }
   .dp-small img{
   border-radius:50%;
-  width: 35px;
-  height: 35px;
+  width: 34px;
+  height: 34px;
   }
 
 .dp-top{
@@ -191,7 +191,12 @@ color: #0c2dc0;
   display: block;
   text-decoration: none;
 }
-
+.linkUnderline {
+  color: -webkit-link;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-position: under;
+}
 .linkUnderlineHover:hover {
   color: -webkit-link;
   cursor: pointer;
@@ -414,35 +419,23 @@ background-clip: text;
   background-color: #007bd9;
   height: 66%;
 }
-.div-curve {
+
+.back-design::before{
+  content: '';
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
   position: absolute;
-  height: 250px;
+  top:0;
+  right:0;
+  left:0;
+  z-index: 0;
   width: 100%;
-  bottom: 0;
-  text-align: center;
+  background-color: #007bd9;
+  height: 30%;
 }
 
-.div-curve::before {
-  content: '';
-  display: block;
-  position: absolute;
-  border-radius: 100% 50%;
-  width: 55%;
-  height: 100%;
-  transform: translate(85%, 60%);
-  background-color: hsl(216, 21%, 16%);
-}
-
-.div-curve::after {
-  content: '';
-  display: block;
-  position: absolute;
-  border-radius: 100% 50%;
-  width: 55%;
-  height: 100%;
-  background-color: #3c31dd;
-  transform: translate(-4%, 40%);
-  z-index: -1;
+.back-design div{
+  z-index: 10;
 }
 
 .grow { transition: all .2s ease-in-out; }

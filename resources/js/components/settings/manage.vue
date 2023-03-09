@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-5 ps-2">
         <div class="mt-1 mb-2">
-             <h5 class="mt-2 ms-2 text-primary"> <span v-text="pageName" role="button"> </span>  </h5>
+             <h5 class="mt-2 text-primary"><i class="bi bi-chevron-left" onclick="history.back()" title="Go back" role="button"></i> <span v-text="pageName" role="button"> </span>  </h5>
         </div>
         </div>
         <div class="col-md-7 pe-3">
@@ -86,7 +86,7 @@
         </div>
 
        <div class="form-group border-bottom mt-3">
-            <h5 class="">Search Enginer</h5>
+            <h5 class="">Search Engine</h5>
         </div>
 
         <div class="form-group mt-3">
@@ -221,7 +221,7 @@
 </template>
 
 <script>
-import phonecodes from '../json/phoneCode'
+import phonecodes from '/storage/json/phoneCode'
 export default {
     name: 'settings',
     props: ['server_record', 'server_message'],

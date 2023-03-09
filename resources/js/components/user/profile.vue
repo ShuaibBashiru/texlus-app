@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-5 ps-2">
         <div class="mt-1 mb-2">
-            <h5 class="mt-2 ms-0 text-muted"><i class="bi bi-chevron-left" onclick="history.back()" title="Go back" role="button"></i> <span v-text="pageName"></span></h5>
+              <a :href="'../list'"><h5 class="mt-2 ms-0 text-muted" title="Go back" role="button"><i class="bi bi-chevron-left"></i> <span>Back</span></h5></a>
         </div>
         </div>
         
@@ -24,7 +24,7 @@
         </li>
     </ul>
   </div>
-    <a :href="'../manage/'+info.generated_id" class="btn btn-outline-primary"> Update  <i class="bi bi-gear"></i></a>
+    <a :href="'../manage/'+info.generated_id" class="btn btn-outline-primary"> Manage  <i class="bi bi-gear"></i></a>
 </div>
 </div>
 </div>
@@ -150,6 +150,34 @@
         </div>
     </div>
 
+<div class="row">
+<div class="col-md-12 content">
+    <div class="m-1 border rounded-3">
+    <div class="row">
+        <div class="col-md-12">
+        <div class="m-3">
+        </div>
+        </div>
+    <div class="col-md-12">
+        <div class="m-3 mt-1">
+            <div class="list-group">
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Account Status</small></p></div>
+            <div class="col-md-6"><p class="text-capitalize p-1 m-0" v-html="info.status_name"></p></div>
+            <div class="col-md-3">
+ 
+        </div>
+        </div>
+        </div>
+        </div>  
+        </div>
+        </div>
+    </div>
+        </div>
+        </div>
+</div>
+
 
     </div>
     </div>
@@ -218,6 +246,64 @@ export default {
     },
         
     methods:{
+
+    confirmStatusUpdate: function(){
+        this.alertMsg=''
+        if (this.parameters.status == '') {
+            return false;
+        }else if(this.parameters.status != '') {
+            this.manageStatus()
+            this.parameters.status = ''
+        }else{
+            this.parameters.status = ''
+            $("#alertDanger").toast('show')
+            this.alertMsg="No item(s) selected!"
+        }
+    },
+
+    manageStatus: function(){
+        this.alertMsg=''
+        $(".toaster").toast('hide')
+        this.showOverlay=true;
+        this.parameters.id = this.info.generated_id
+        axios.get('/user/manage/status', {params:this.parameters}).then(response => {
+            this.button=this.btntxt;
+            this.showOverlay=false;
+            this.errors = '';
+             if((response.status != undefined && response.status==200) && (response['data'].data.status==response['data'].data.statusmsg)){
+            this.alertMsg=response['data'].data.msg;
+            $("#alertPrimary").toast('show')
+            setTimeout(function(){
+                window.location.reload()
+            }, 2000)
+            }else if(response['data'].data.status=='failed'){
+            this.alertMsg=response['data'].data.msg;
+            $("#alertDanger").toast('show')
+            }else{
+            this.alertMsg=response['data'].data.msg;
+            $("#alertDanger").toast('show')
+            }
+
+        }).catch(error => {
+                this.button=this.btntxt;
+                this.showOverlay=false;
+                this.errors = '';
+            if(error.response != undefined && error.response.status==422){
+                this.errors = error.response.data.errors;
+                this.alertMsg='Something went wrong! Kindly confirm and correct the error(s) before you continue.'
+                $("#alertDanger").toast('show')
+            } else if(error.response != undefined && error.response.status==419){
+                this.alertMsg='This page has been inactive for long, Kindly refresh and try again.';
+                $("#alertDanger").toast('show')
+            }else if(error.response != undefined && error.response.status==500){
+                this.alertMsg='Internal server error! Please refresh and try again or report this error.';
+                $("#alertDanger").toast('show')
+            }else{
+                this.alertMsg='Access restricted or Network error! Please refresh and try again or report this error.';
+                $("#alertDanger").toast('show')
+            }
+        })
+    },
 
         }
 

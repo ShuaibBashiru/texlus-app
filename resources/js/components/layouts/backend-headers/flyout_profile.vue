@@ -44,7 +44,6 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
     name: 'flyout_profile',
     data(){
@@ -62,7 +61,7 @@ export default {
         responseStatus: '',
         errors: [],
         usersession: [],
-        settings: appsettings,
+        settings: '',
         changes: '',
         menuList: [],
         sidebarMenu: [
@@ -74,13 +73,20 @@ export default {
         },
 
   created(){
+    this.getAppSettings();
       this.getSessionData();
      this.getMenus();
     },
 
 
   methods:{
-
+     getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
   getSessionData: function(){
        try {
          if (this.$session.get('usersession')!=undefined && this.$session.get('usersession')!='') {

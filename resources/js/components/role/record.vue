@@ -479,7 +479,7 @@ resetForm: function(){
     getStatus: function(){
         $(".toaster").toast('hide')
         this.showOverlay=true;
-        axios.get('/status/list', {params:this.parameters}).then(response => {
+        axios.get('/api/status/list', {params:this.parameters}).then(response => {
             this.button=this.btntxt;
             this.showOverlay=false;
             this.errors = '';

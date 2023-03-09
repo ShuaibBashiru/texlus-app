@@ -17,7 +17,7 @@
         <div class="list-group-item">
         <div class="row">
             <div class="col-md-9"><p class="p-1 m-0 text-danger"><small>This action is irreversible, there is no going back once you delete.</small></p></div>
-            <div class="col-md-3"><button class="btn btn-outline-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete record</button></div>
+            <div class="col-md-3"><button class="btn btn-outline-danger float-end" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete account</button></div>
         </div>
         </div>
         </div>  

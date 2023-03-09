@@ -51,7 +51,7 @@ class AdminPassportController extends Controller
         public function passport(Request $request){
             $request->validate([
                 'personal_id' => 'required|string|max:30|min:6',
-                'upload_file' => 'required|max:2000|mimes:jpg',
+                'upload_file' => 'required|max:2000|mimes:jpg,png',
             ]);
             try {
                 $exist = false;

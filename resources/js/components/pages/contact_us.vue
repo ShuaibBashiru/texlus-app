@@ -63,12 +63,11 @@ font-size: 18px;
 }
 </style>
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
   name: 'contact_us',
     data (){
         return{
-        settings:appsettings,
+        settings: '',
         Alert: 'hide',
         alertTitle: '',
         showOverlay: false,
@@ -80,7 +79,6 @@ export default {
         errorBox: 'd-none',
         AlertColor: 'text-primary',
         alertMsg: '',
-        
         notification: '',
         alertmodal: '',
         info: [],
@@ -88,7 +86,6 @@ export default {
         classnamemodal: '',
         submit: 'Submit',
         submittxt:'Submit',
- 
         opacity:'',
         record:false,
         responseStatus: '',
@@ -97,8 +94,16 @@ export default {
     },
 
     created(){
+      this.getAppSettings();
     }, 
     methods:{
+      getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
     },
 
 

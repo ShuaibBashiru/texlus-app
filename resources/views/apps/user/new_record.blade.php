@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('pageTitle', 'Create Student Record')
+@section('pageTitle', 'Create Record')
 @section('content')
    <!-- Please note that, these are just default components, 
     any of these can me replaced and modified as the case may be -->

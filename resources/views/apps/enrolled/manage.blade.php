@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('pageTitle', 'Edit Password')
+@section('pageTitle', 'Actions')
 @section('content')
    <!-- Please note that, these are just default components, 
     any of these can me replaced and modified as the case may be -->
@@ -20,9 +20,10 @@
         <!-- Body component(s) -->
             <div id="contentPanel" class="col-md-10 p-0 mt-5">
             <div class="mb-5 mt-4">
-                
-           <edit_user_password :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"></edit_user_password>
-        </div>
+           <manage_enrolled :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"></manage_enrolled>
+           <payment_history :server_record="{{ session('record') ?? $record ?? json_encode('') }}"> </payment_history>
+           <course_progress :server_record="{{ session('record') ?? $record ?? json_encode('') }}"> </course_progress>
+    </div>
 
        </div>
 

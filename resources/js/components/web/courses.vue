@@ -1,13 +1,13 @@
 <template>
 <div class="bg-light-eee" style="">
 
-<essential-course> </essential-course>
+<all-courses> </all-courses>
 
 </div>
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
+
 export default {
   name: 'courses',
     data (){
@@ -21,14 +21,22 @@ export default {
         record:false,
         responseStatus: '',
         errors: [],
-        settings:appsettings,
+        settings: '',
 
     }
     },
 
     created(){
+      this.getAppSettings();
     }, 
     methods:{
+      getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+     },
     },
 
 

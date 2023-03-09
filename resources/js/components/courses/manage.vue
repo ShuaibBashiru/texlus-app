@@ -60,25 +60,25 @@
         <div class="list-group-item">
         <div class="row">
             <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Post Link</small></p></div>
-            <div class="col-md-9"><p class="p-1 m-0"> <em><a :href="info.post_link" v-text="info.post_link"></a></em> </p></div>
+            <div class="col-md-9"><p class="p-1 m-0"> <em><a :href="info.item_link" v-text="info.item_link"></a></em> </p></div>
         </div>
         </div>  
         <div class="list-group-item">
         <div class="row">
             <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Title</small></p></div>
-            <div class="col-md-9"><p class="fw-bold p-1 m-0" v-html="info.post_title"></p></div>
+            <div class="col-md-9"><p class="fw-bold p-1 m-0" v-html="info.item_title"></p></div>
         </div>
         </div> 
         <div class="list-group-item">
         <div class="row">
             <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Summary</small></p></div>
-            <div class="col-md-9"><p class="p-1 m-0" v-html="info.post_summary"></p></div>
+            <div class="col-md-9"><p class="p-1 m-0" v-html="info.item_summary"></p></div>
         </div>
         </div>  
      <div class="list-group-item">
         <div class="row">
             <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Page content</small></p></div>
-            <div class="col-md-9"><p class="p-1 m-0" v-html="info.post_body"></p></div>
+            <div class="col-md-9"><p class="p-1 m-0" v-html="info.contents"></p></div>
         </div>
         </div>   
 
@@ -171,7 +171,7 @@ export default {
       getStatus: function(){
         $(".toaster").toast('hide')
         this.showOverlay=true;
-        axios.get('/status/list', {params:this.parameters}).then(response => {
+        axios.get('/api/status/list', {params:this.parameters}).then(response => {
             this.button=this.btntxt;
             this.showOverlay=false;
             this.errors = '';

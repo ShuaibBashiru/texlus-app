@@ -114,7 +114,7 @@
 
 <script>
 export default {
-    name: 'Notification_New',
+    name: 'Notification_new',
     props: ['server_record', 'server_message'],
     data (){
         return{

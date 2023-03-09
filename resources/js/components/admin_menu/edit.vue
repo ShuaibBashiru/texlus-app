@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import icons from '../json/icons.json'
+import icons from '/storage/json/icons.json'
 export default {
     name: 'AdminMenu_Edit',
     props: ['server_record', 'server_message'],

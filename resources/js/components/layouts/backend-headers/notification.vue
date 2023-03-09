@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
+
 export default {
     name: 'notifications',
     data(){
@@ -59,7 +59,7 @@ export default {
         responseStatus: '',
         errors: [],
         usersession: [],
-        settings: appsettings,
+        settings: '',
         changes: '',
         menuList: [],
         parameters:{
@@ -69,12 +69,20 @@ export default {
         },
 
   created(){
+    this.getAppSettings();
       this.getSessionData();
       this.getList();
     },
 
 
   methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
   getSessionData: function(){
        try {
          if (this.$session.get('usersession')!=undefined && this.$session.get('usersession')!='') {

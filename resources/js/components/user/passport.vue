@@ -13,22 +13,25 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <h4 class="lead">Profile picture</h4>
-          <p class="p-1 m-0 text-muted"><small>This profile picture is an identity to recognize you across account activities. Upload a valid picture for easy recognition.</small></p>
+          <p class="p-1 m-0 text-muted"><small>This profile picture is an identity to recognize you across your account's activities. Upload a valid picture for easy recognition.</small></p>
         </div>
       </div>
-          <hr class="m-1" />
+      <hr class="m-1" />
       <div class="row mt-3">
         <div class="col text-center">
           <div class="m-1">
             <div class="passport-dp rounded-circle m-auto" style="width:220px; height:220px;">
              <img :src="userProfilePassport" class="rounded-circle" style="width:220px; height:220px;" alt=" ">
           </div>
+            <div class="progress mt-2" v-if="uploading">
+            <div class="progress-bar progress-bar-striped" role="progressbar" :style="'width:'+progress+'%;'" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span v-text="progress+'%'"></span></div>
+            </div>
           </div>
         </div>
         <div class="col-12 text-center">
           <div class="m-1 mt-1">
             <div class="input-group">
-                <input type="file" id="file" @change="onFileSelected" class="form-control shadow-none d-none" accept=".png, .jpg, .webp, .gif" required>
+                <input type="file" ref="fileInput" id="file" @change="onFileSelected" class="form-control shadow-none d-none" accept=".png, .jpg" required>
             </div>
             <span class="text-danger" for="" v-if="errors.upload_file && errors.upload_file != ''"><small> <i class="bi bi-x-circle-fill"></i> <span v-text="errors.upload_file[0]"></span> </small></span>
           </div>
@@ -44,7 +47,7 @@
       <hr />
       <div class="row">
         <div class="col-md-12">
-       <label for="file" class="btn btn-secondary float-start"><i class="bi bi-image"></i> Change </label> 
+       <button @click="$refs.fileInput.click()" class="btn btn-secondary float-start"><i class="bi bi-image"></i> Change </button> 
         <button type="button" class="btn btn-success float-end" @click="validateFile" :disabled="disabled"> <i class="bi bi-save"></i> <span v-text="button"></span> </button>
       </div>
       </div>
@@ -76,14 +79,14 @@ export default {
         maximumRow: 10,
         rowSelected: '',
         totalRecord: [],
-        progress: null,
         button: 'Save',
         btntxt: 'Save',
         record:false,
         responseStatus: '',
         usersession: [],
         category_list: [],
-        progress: '0%',
+        progress: 0,
+        uploading: false,
         selectedFile: '',
         disabled: true,
         validated: false,
@@ -104,6 +107,8 @@ export default {
 
   methods:{
         onFileSelected: function(event){
+          this.uploading = true;
+          this.progress = 0;
           try {
             this.errors = '';
             this.alertMsg = '';
@@ -126,6 +131,12 @@ export default {
         },
 
       sendPost: function(){
+        const config = {
+            onUploadProgress: progressEvent => {
+              this.uploading = true;
+              this.progress = Math.round(progressEvent.loaded / progressEvent.total) * 100
+            }
+        }
         this.button='Please wait...';
         this.showOverlay=true;
         this.alertMsg = '';
@@ -134,19 +145,21 @@ export default {
         form.append(key, this.parameters[key])
         }
         form.append('upload_file', this.selectedFile, this.selectedFile.name)
-        axios.post('/user/passport', form).then(response => {
+        axios.post('/user/passport', form, config).then(response => {
             this.button=this.btntxt;
             this.showOverlay=false;
             this.errors = '';
             if((response.status != undefined && response.status==200) && (response['data'].data.status==response['data'].data.statusmsg)){
             this.alertMsg=response['data'].data.msg;
             this.disabled = true;
-            setTimeout(function(){
-                  window.location.reload()
-            }, 2000)
+            // setTimeout(function(){
+            //       window.location.reload()
+            // }, 2000)
             }else if(response['data'].data.status=='failed'){
+            this.uploading = false;
             this.alertMsg=response['data'].data.msg;
             }else{
+            this.uploading = false;
             this.alertMsg=response['data'].data.msg;
             }
 

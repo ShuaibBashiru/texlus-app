@@ -73,7 +73,7 @@
 
 <script>
 export default {
-    name: 'Post_category_New',
+    name: 'Post_category_new',
     props: ['server_record', 'server_message'],
     data (){
         return{

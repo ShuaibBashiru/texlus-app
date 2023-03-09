@@ -7,40 +7,64 @@
     <a href="#" id="topLink"></a>
 
 <div class="row mt-3 mb-4">
-<div class="col-md-8 m-auto">
+
+<div class="col-md-8 bg-light m-auto rounded">
 <div class="row">
+<div class="col-md-5 p-1">
+     <div class="m-1 rounded-3">
+        <div class="row">
+        <div class="col-md-12">
+        <a class="navbar-brand p-2 m-0 mt-3" href="#"><img :src="settings.logo_link" class="img-fluid rounded logoSize" alt="Logo"> <span class="fs-4" v-text="settings.site_name"></span> </a>
+        <div class="mt-4"></div>
+        <h6 class="p-2">CREATE AN ACCOUNT</h6>
+        <img :src="displayimage" class="img-fluid rounded w-100" alt="Logo">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h6 class="fw-bold">1.  Account</h6>
+                <p class="text-muted"> <small>Create an account to manage your activities</small> </p>
+            </li>
+        </ul>
+         <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <h6 class="fw-bold">2.  Email validation</h6>
+                <p class="text-muted"> <small>Validate your account via the link sent to your email address provided.</small> </p>
+            </li>
+        </ul> 
+        </div> 
+        </div>
+     </div>
+</div>
+
 <div class="col-md-7 m-auto">
     <div class="">
         <div class="row">
-    <div class="col-md-12 text-center">
-    <a class="navbar-brand p-0 m-0" href="#"><img :src="settings.logo_link" class="img-responsive rounded logoSize2"  alt="Logo"> <br/> <span class="fs-4 text-white" v-text="settings.site_name"></span> </a>
-    </div> 
-    <div class="col-md-12 m-0 p-0 mt-3" v-if="!accountStatus">
+    <div class="col-md-12 m-0 p-0" v-if="!accountStatus">
     <div class="m-1 border rounded-3 bg-light">
     <div class="row">
     <div class="col-md-12">
         <div class="m-3 mt-1">
             <form @submit.prevent="confirmSubmit" id="formChange">
             <fieldset class="border p-2 pt-0">
-                <legend class="w-auto" style="float: none; padding: inherit;"><small>New Account</small></legend>
+                <legend class="w-auto" style="float: none; padding: inherit;"><small><i class="bi bi-person"></i></small></legend>
         <div class="row">
-    <div class="col-md-12 mt-1">
-        <div class="m-1 mt-2">
+            <div class="col-12">
+            <p class="ps-2"> <small>Let's get you set up in a minute so you can manage your personal account and activities.</small></p>
+            </div>
+    <div class="col-md-6">
+        <div class="m-1 mt-2 me-0">
                    <label for="lastname">Last Name<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.lastname" @keyup="noSpace('lastname')" id="lastname" minlength="3" maxlength="200" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Last Name/Surname">
+                    <input type="text" v-model="parameters.lastname" @keyup="noSpace('lastname')" id="lastname" minlength="3" maxlength="200" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Last Name">
                 </div>
                 <span class="text-danger" for="" v-if="errors.lastname && errors.lastname != ''"><small> <span v-text="errors.lastname[0]"></span> </small></span>
                 </div>
         </div>
 
-        <div class="col-md-12">
-                <div class="m-1 mt-3">
+        <div class="col-md-6">
+                <div class="m-1 mt-2 ms-0">
                    <label for="firstname">First Name<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.firstname" @keyup="noSpace('firstname')" minlength="3" maxlength="200" id="firstname" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="First Name">
+                    <input type="text" v-model="parameters.firstname" @keyup="noSpace('firstname')" minlength="3" maxlength="200" id="firstname" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="First name">
                 </div>
                <span class="text-danger" for="" v-if="errors.firstname && errors.firstname != ''"><small> <span v-text="errors.firstname[0]"></span> </small></span>
                 </div>
@@ -49,8 +73,7 @@
                 <div class="m-1 mt-3">
                 <label for="email">Email<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-mailbox"></i></span>
-                    <input type="email" v-model="parameters.email_one" minlength="10" name="email_one" maxlength="100" id="email" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Email address">
+                    <input type="email" v-model="parameters.email_one" minlength="10" name="email_one" maxlength="100" id="email" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Email Address">
                 </div>
                 <span class="text-danger" for="" v-if="errors.email_one && errors.email_one != ''"><small> <span v-text="errors.email_one[0]"></span> </small></span>
                 </div>
@@ -118,9 +141,12 @@
 <div class="col-12 text-center mt-5" v-else>
 <div class="row">
     <div class="col-md-12 pt-4 p-3 m-auto bg-light border rounded">
-        <p class="display-2"><i class="bi bi-check-square text-primary"></i></p>
-        <h2 class="text-primary">Success!</h2>
-        <p class="lead text-primary" v-html="alertMsg">
+        <p class="display-4"><i class="bi bi-check-square text-primary"></i></p>
+        <h3 class="text-primary">Success!</h3>
+        <!-- <p class="lead text-primary" v-html="alertMsg">
+            Your account was created successfully. To continue, kindly click the link that was sent to the email provided to set your password.
+        </p> -->
+      <p class="lead text-primary">
             Your account was created successfully. To continue, kindly click the link that was sent to the email provided to set your password.
         </p>
     </div>
@@ -143,15 +169,15 @@
 
 </template>
 <script>
-import phonecodes from '../json/phoneCode'
-import appsettings from '/storage/settings/app.json'
+
+import phonecodes from '/storage/json/phoneCode'
 export default {
     name: 'signup',
     props: ['server_record', 'server_message'],
     data (){
         return{
         pageName: 'Account',
-        settings: appsettings,
+        settings: '',
         alertTitle: '',
         alertMsg: '',
         showOverlay: false,
@@ -174,6 +200,7 @@ export default {
         pass_type: 'password',
         toggle: null,
         accountStatus: false,
+        displayimage: '/assets/images/new-account.jpg',
         parameters:{
             personal_id: '',
             lastname: '',
@@ -208,10 +235,18 @@ export default {
     },
 
     created(){
-        this.getGenders();
+        this.getAppSettings();
+        // this.getGenders();
         },
 
     methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
     resetForm: function(){
         this.validated = false;
         this.disabled = false;
@@ -227,7 +262,6 @@ export default {
         this.pass_type = 'password'
         }
         },
-
 
 
     validateForm: function(){

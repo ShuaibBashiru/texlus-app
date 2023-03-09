@@ -22,7 +22,10 @@ class CourseController extends Controller
             $record = $record['info'];
             return view('apps.courses.manage', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_course')->with('message', json_encode($message));
         }
     }
@@ -36,7 +39,10 @@ class CourseController extends Controller
             $record = $record['info'];
             return view('apps.courses.edit', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_course')->with('message', json_encode($message));
         }
     }
@@ -169,7 +175,7 @@ class CourseController extends Controller
 
     public function uploadDisplayFile(Request $request, $id){
         $request->validate([
-            'upload_file' => 'required|mimes:jpeg,png,gif,webp,mp4,mkv',
+            'upload_file' => 'required|mimes:jpeg,png,gif,pdf,docx,doc,ppt,webp,mp4,mkv',
         ]);
         
         $exist = false;
@@ -210,10 +216,10 @@ class CourseController extends Controller
 
     public function create(Request $request){
        $request->validate([
-            'post_title' => 'required|unique:courses_tbl|min:2',
-            'post_summary' => 'nullable|min:2',
-            'post_body' => 'nullable|min:2',
-            'post_link' => 'required|min:2',
+            'item_title' => 'required|unique:courses_tbl|min:2',
+            'item_summary' => 'nullable|min:2',
+            'contents' => 'nullable|min:2',
+            'item_link' => 'required|min:2',
             'display_media_status' => 'required|max:10|min:1',
             'read_more_status' => 'required|max:10|min:1',
             'read_more_title' => 'required|max:100|min:2',
@@ -224,10 +230,13 @@ class CourseController extends Controller
             'media_measure' => 'required|max:50|min:1',
             'original_price' => 'required|max:50|min:1',
             'discount' => 'required|max:50|min:1',
-            'discounted_price' => 'required|max:50|min:1',
+            'display_price' => 'required|max:50|min:1',
             'durations' => 'required|max:50|min:1',
             'class_mode' => 'required|max:50|min:1',
+            'beginner_level' => 'required|max:50|min:1',
+            'language_title' => 'required|max:50|min:1',
             'startDate' => 'required|max:50|min:1',
+            'endDate' => 'required|max:50|min:1',
             'display_media' => 'nullable|max:10|min:1',
             'category_id' => 'required|max:50|min:1',
             'status_id' => 'required|max:50|min:1',
@@ -242,10 +251,10 @@ class CourseController extends Controller
             $file = $request->file('upload_file')=='' ? '' : $request->file('upload_file');
             $record = [
                 "generated_id" => $generated_id,
-                "post_title" => $request->input('post_title'),
-                "post_summary" => $request->input('post_summary'),
-                "post_body" => $request->input('post_body'),
-                "post_link" => $request->input('post_link'),
+                "item_title" => $request->input('item_title'),
+                "item_summary" => $request->input('item_summary'),
+                "contents" => $request->input('contents'),
+                "item_link" => $request->input('item_link'),
                 "display_media_status" => $request->input('display_media_status'),
                 "read_more_status" => $request->input('read_more_status'),
                 "read_more_title" => $request->input('read_more_title'),
@@ -255,10 +264,13 @@ class CourseController extends Controller
                 "media_measure" => $request->input('media_measure'),
                 "original_price" => $request->input('original_price'),
                 "discount" => $request->input('discount'),
-                "discounted_price" => $request->input('discounted_price'),
+                "display_price" => $request->input('display_price'),
                 "durations" => $request->input('durations'),
                 "class_mode" => $request->input('class_mode'),
+                "beginner_level" => $request->input('beginner_level'),
+                "language_title" => $request->input('language_title'),
                 "startDate" => $request->input('startDate'),
+                "endDate" => $request->input('endDate'),
                 "media_type" => $request->input('media_type'),
                 "display_media" => '',
                 "category_id" => $request->input('category_id'),
@@ -323,10 +335,10 @@ class CourseController extends Controller
     public function update_record(Request $request){
         $request->validate([
             'generated_id' => 'required',
-            'post_title' => 'required|min:2',
-            'post_summary' => 'nullable|min:2',
-            'post_body' => 'nullable|min:2',
-            'post_link' => 'required|min:2',
+            'item_title' => 'required|min:2',
+            'item_summary' => 'nullable|min:2',
+            'contents' => 'nullable|min:2',
+            'item_link' => 'required|min:2',
             'display_media_status' => 'required|max:10|min:1',
             'read_more_status' => 'required|max:10|min:1',
             'read_more_title' => 'required|max:100|min:2',
@@ -336,10 +348,13 @@ class CourseController extends Controller
             'media_measure' => 'required|max:50|min:1',
             'original_price' => 'required|max:50|min:1',
             'discount' => 'required|max:50|min:1',
-            'discounted_price' => 'required|max:50|min:1',
+            'display_price' => 'required|max:50|min:1',
             'durations' => 'required|max:50|min:1',
             'class_mode' => 'required|max:50|min:1',
+            'beginner_level' => 'required|max:50|min:1',
+            'language_title' => 'required|max:50|min:1',
             'startDate' => 'required|max:50|min:1',
+            'endDate' => 'required|max:50|min:1',
             'display_media' => 'nullable|max:10|min:1',
             'category_id' => 'required|max:50|min:1',
             'status_id' => 'required|max:50|min:1',
@@ -354,10 +369,10 @@ class CourseController extends Controller
             $file = $request->file('upload_file')=='' ? '' : $request->file('upload_file');
             $media_link = $request->input('media_link')=='' ? '' : $request->input('media_link');
             $record = [
-                "post_title" => $request->input('post_title'),
-                "post_summary" => $request->input('post_summary'),
-                "post_body" => $request->input('post_body'),
-                "post_link" => $request->input('post_link'),
+                "item_title" => $request->input('item_title'),
+                "item_summary" => $request->input('item_summary'),
+                "contents" => $request->input('contents'),
+                "item_link" => $request->input('item_link'),
                 "display_media_status" => $request->input('display_media_status'),
                 "read_more_status" => $request->input('read_more_status'),
                 "read_more_title" => $request->input('read_more_title'),
@@ -368,10 +383,13 @@ class CourseController extends Controller
                 "media_measure" => $request->input('media_measure'),
                 "original_price" => $request->input('original_price'),
                 "discount" => $request->input('discount'),
-                "discounted_price" => $request->input('discounted_price'),
+                "display_price" => $request->input('display_price'),
                 "durations" => $request->input('durations'),
                 "class_mode" => $request->input('class_mode'),
+                "beginner_level" => $request->input('beginner_level'),
+                "language_title" => $request->input('language_title'),
                 "startDate" => $request->input('startDate'),
+                "endDate" => $request->input('endDate'),
                 "media_type" => $request->input('media_type'),
                 "display_media" => '',
                 "category_id" => $request->input('category_id'),
@@ -590,7 +608,7 @@ public function trash(Request $request)
         $row = [
             "deleted_by" => base64_decode($getSession['userid']),
             "deleted_status" => 1,
-            "post_title" => $request->input('post_title').'::deleted',
+            "item_title" => $request->input('item_title').'::deleted',
         ];
         
     if ($this->checkBeforeDelete($id, 0)) {

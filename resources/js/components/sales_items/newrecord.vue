@@ -82,7 +82,7 @@
 
 <script>
 export default {
-    name: 'salesItems_New',
+    name: 'salesItems_new',
     props: ['server_record', 'server_message'],
     data (){
         return{

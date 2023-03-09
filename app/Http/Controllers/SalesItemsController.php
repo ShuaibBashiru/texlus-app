@@ -23,7 +23,10 @@ class SalesItemsController extends Controller
             $record = $record['info'];
             return view('apps.sales_items.manage', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_salesitems')->with('message', json_encode($message));
         }
     }

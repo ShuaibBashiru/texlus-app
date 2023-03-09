@@ -108,7 +108,7 @@
         <tr>
             <th scope="col-1" class="text-center"> <input type="checkbox" name="checkAll" v-model="selectToggleValue" @click="selectToggle"> </th>
             <th scope="col" class="text-truncate" @click="sortOrder('category_name')" title="">Category <i class="bi bi-sort-down float-end"></i></th>
-            <th scope="col" class="text-truncate" @click="sortOrder('post_title')" title="Title">Title</th>
+            <th scope="col" class="text-truncate" @click="sortOrder('item_title')" title="Title">Title</th>
             <th scope="col" class="text-truncate" title="">Media</th>
             <th scope="col" class="text-truncate" title="">Has read more</th>
             <th scope="col" class="text-truncate" @click="sortOrder('status_id')" title="Status"> Status <i class="bi bi-sort-down float-end"></i></th>
@@ -121,7 +121,7 @@
         <tr v-for="(d, index) in info.slice(startNumber, endNumber)" :key="index">
             <td class="col-1 text-center"><input type="checkbox" id="" :value="d.generated_id" v-model="parameters.selectedList" name="checkbox" @change="checkBoxOnChange"></td>
             <td class="" v-html="d.category_name ? d.category_name : ''"></td>
-            <td class="" v-html="d.post_title ? d.post_title : ''"></td>
+            <td class="" v-html="d.item_title ? d.item_title : ''"></td>
             <td class="text-center">
                  <img v-if="d.media_type=='Image'" :src="d.display_media ? d.display_media:nomedia" class="border rounded enlarge-img" width="40" height="40" alt="No media">
                 <video v-else :src="d.display_media ? d.display_media:nomedia" controls="true" class="border rounded enlarge-img" width="40" height="40" alt="No media"></video>
@@ -300,8 +300,8 @@ export default {
        for (let i = 0; i < this.totalRecord.length; i++) {
            if (
             this.totalRecord[i].category_name.toString().toLowerCase().search(this.search.toString().toLowerCase())!=-1 ||
-            this.totalRecord[i].post_title.toString().toLowerCase().search(this.search.toString().toLowerCase())!=-1 ||
-            this.totalRecord[i].post_summary.toString().toLowerCase().search(this.search.toString().toLowerCase())!=-1 ||
+            this.totalRecord[i].item_title.toString().toLowerCase().search(this.search.toString().toLowerCase())!=-1 ||
+            this.totalRecord[i].item_summary.toString().toLowerCase().search(this.search.toString().toLowerCase())!=-1 ||
             this.totalRecord[i].updated_at.toString().toLowerCase().search(this.search.toString().toLowerCase())!=-1
                ){
             newRecord.push(this.totalRecord[i]);
@@ -404,7 +404,7 @@ export default {
     getStatus: function(){
         $(".toaster").toast('hide')
         this.showOverlay=true;
-        axios.get('/status/list', {params:this.parameters}).then(response => {
+        axios.get('/api/status/list', {params:this.parameters}).then(response => {
             this.button=this.btntxt;
             this.showOverlay=false;
             this.errors = '';

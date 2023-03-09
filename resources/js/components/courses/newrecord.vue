@@ -70,14 +70,14 @@
 
         <div class="form-group mt-3">
             <label for="title" class="text-dark" title="required">Title <sup>*</sup></label>
-            <textarea id="title" placeholder="Enter your content title" class="form-control mt-1 mb-1" @keyup="oneSpace('post_title')" v-model="parameters.post_title" rows="1" required></textarea>
-            <span class="text-danger" for="" v-if="errors.post_title && errors.post_title != ''"><small> <span v-text="errors.post_title[0]"></span> </small></span>
+            <textarea id="title" placeholder="Enter your content title" class="form-control mt-1 mb-1" @keyup="oneSpace('item_title')" v-model="parameters.item_title" rows="1" required></textarea>
+            <span class="text-danger" for="" v-if="errors.item_title && errors.item_title != ''"><small> <span v-text="errors.item_title[0]"></span> </small></span>
         </div>
                
         <div class="form-group col mt-3">
             <label for="summary" class="text-dark" title="required">Summary <sup></sup></label>
-            <textarea id="summary" placeholder="Enter your content summary" class="form-control mt-1 mb-1" @keyup="oneSpace('post_summary')" v-model="parameters.post_summary" rows="3"></textarea>
-            <span class="text-danger" for="" v-if="errors.post_summary && errors.post_summary != ''"><small> <span v-text="errors.post_summary[0]"></span> </small></span>
+            <textarea id="summary" placeholder="Enter your content summary" class="form-control mt-1 mb-1" @keyup="oneSpace('item_summary')" v-model="parameters.item_summary" rows="3"></textarea>
+            <span class="text-danger" for="" v-if="errors.item_summary && errors.item_summary != ''"><small> <span v-text="errors.item_summary[0]"></span> </small></span>
         </div>
         <div class="form-group col mt-3">
      <div class="row mt-3">
@@ -95,9 +95,9 @@
         </div>
 
         <div class="col-md-6 mt-3">
-            <label for="discounted_price" class="text-muted w-100">Display Price </label>
+            <label for="display_price" class="text-muted w-100">Display Price </label>
             <div class="input-group">
-            <input type="number" id="discounted_price" min="10" @keyup="checkNotANumber('discounted_price')" v-model="parameters.discounted_price" class="form-control form-control-sm shadow-none" placeholder="Price" required readonly>
+            <input type="number" id="display_price" min="10" @keyup="checkNotANumber('display_price')" v-model="parameters.display_price" class="form-control form-control-sm shadow-none" placeholder="Price" required readonly>
             </div>
         </div>
 
@@ -122,7 +122,27 @@
         <div class="col-md-6 mt-3">
             <label for="startDate" class="text-muted">Start date</label>
             <div class="input-group">
-            <input type="text" id="startDate" min="10" @keyup="oneSpace('startDate')" v-model="parameters.startDate" class="form-control form-control-sm shadow-none" placeholder="Start date" required>
+            <input type="date" id="startDate" min="10" v-model="parameters.startDate" class="form-control form-control-sm shadow-none" placeholder="Start date" required>
+            </div>
+        </div>
+       <div class="col-md-6 mt-3">
+            <label for="endDate" class="text-muted">End date</label>
+            <div class="input-group">
+            <input type="date" id="endDate" min="10" v-model="parameters.endDate" class="form-control form-control-sm shadow-none" placeholder="Start date" required>
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+            <label for="beginner_level" class="text-muted">Level</label>
+            <div class="input-group">
+            <input type="text" id="beginner_level" min="10" @keyup="oneSpace('beginner_level')" v-model="parameters.beginner_level" class="form-control form-control-sm shadow-none" placeholder="Duration" required>
+            </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+            <label for="language_title" class="text-muted">Language</label>
+            <div class="input-group">
+            <input type="text" id="language_title" min="10" @keyup="oneSpace('language_title')" v-model="parameters.language_title" class="form-control form-control-sm shadow-none" placeholder="Duration" required>
             </div>
         </div>
 
@@ -195,8 +215,8 @@
     </div>        
         <div class="form-group col mt-3" v-if="parameters.read_more_status==1">
         <button type="button" class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#editorModal" @click="getSourceCode">Source code</button>
-        <Vue2Editor id="editor" v-model="parameters.post_body" class="w-100 editor"/>
-        <span class="text-danger" for="" v-if="errors.post_body && errors.post_body != ''"><small> <span v-text="errors.post_body[0]"></span> </small></span>
+        <VueEditor id="editor" v-model="parameters.contents" class="w-100 editor"/>
+        <span class="text-danger" for="" v-if="errors.contents && errors.contents != ''"><small> <span v-text="errors.contents[0]"></span> </small></span>
         </div>
     </div>
 </div>
@@ -230,7 +250,7 @@
 
 <div class="row ps-2 pe-2 m-0" v-if="parameters.display_media_status==1">
 <div class="col-12 p-1">
-    <input type="file" id="file" @change="onFileSelected" class="form-control shadow-none d-none" accept=".png, .jpg, .webp, .gif, .mp4, .mkv">
+    <input type="file" id="file" @change="onFileSelected" class="form-control shadow-none d-none" accept=".png, .jpg, .webp, .gif, .mp4, .mkv, .ppt, .pdf, .doc, .docx">
     <div class="m-1 w-100">
        <label class="text-muted w-100" for="file" role="button">
         <span class=""><em>Click to pick a media file</em></span> 
@@ -248,8 +268,8 @@
 <div class="row ps-2 mt-3">
 <div class="col">
     <div class="m-1">
-        <h5 class="fw-bolder ps-1 pe-2" v-html="parameters.post_title"></h5>
-        <p class="ps-1 pe-2"> <span class="truncate truncate_4" v-html="parameters.post_summary"> </span> 
+        <h5 class="fw-bolder ps-1 pe-2" v-html="parameters.item_title"></h5>
+        <p class="ps-1 pe-2"> <span class="truncate truncate_4" v-html="parameters.item_summary"> </span> 
         <section v-if="parameters.read_more_status==1" class="mt-3">
         <a href="#" style="text-underline-position: under;" class="float-start" v-if="parameters.read_more_type=='TextLink'"> <u><span v-text="parameters.read_more_title"></span></u>  </a>
         <a href="#" class="btn btn-primary float-start" v-else v-text="parameters.read_more_title">  </a>
@@ -263,7 +283,7 @@
 <div class="col-12" v-if="parameters.read_more_status==1">
     <div class="m-1">
         <hr>
-        <p> <span class="" v-html="parameters.post_body"> </span> </p>
+        <p> <span class="" v-html="parameters.contents"> </span> </p>
     </div>
 </div>
 
@@ -279,8 +299,8 @@
         </div>
         </div>
         <div class="form-group">
-        <textarea id="link" placeholder="Post link" class="form-control mt-1 mb-1" v-model="parameters.post_link" rows="1"></textarea>
-        <span class="text-danger" for="" v-if="errors.post_link && errors.post_link != ''"><small> <span v-text="errors.post_link[0]"></span> </small></span>
+        <textarea id="link" placeholder="Post link" class="form-control mt-1 mb-1" v-model="parameters.item_link" rows="1"></textarea>
+        <span class="text-danger" for="" v-if="errors.item_link && errors.item_link != ''"><small> <span v-text="errors.item_link[0]"></span> </small></span>
         </div>
     </div>
     <div class="col-12 mt-2">
@@ -313,9 +333,9 @@
 </template>
 
 <script>
-import phonecodes from '../json/phoneCode'
+import phonecodes from '/storage/json/phoneCode'
 export default {
-    name: 'Course_New',
+    name: 'Course_new',
     props: ['server_record', 'server_message'],
     data (){
         return{
@@ -342,10 +362,10 @@ export default {
         mediaFile: '/assets/icons/nomedia.png',
         selectedFile: '',
         parameters:{
-            post_title: '',
-            post_summary: '',
-            post_body: '',
-            post_link: '',
+            item_title: '',
+            item_summary: '',
+            contents: '',
+            item_link: '',
             media_height: '160',
             media_width: '160',
             media_type: 'Image',
@@ -356,11 +376,14 @@ export default {
             read_more_type: 'Button',
             display_media_status: 1,
             original_price: 0,
-            discounted_price: 0,
+            display_price: 0,
             discount: 0,
             durations: '',
-            class_mode: 'Physical class',
+            class_mode: 'Physical',
+            beginner_level: 'No prior experienced required',
+            language_title: 'English',
             startDate: '',
+            endDate: '',
             status_id: 0,
             category_id: '',
         },
@@ -376,10 +399,10 @@ export default {
 
     methods:{
     getSourceCode: function(){
-        this.sourcecode = this.parameters.post_body
+        this.sourcecode = this.parameters.contents
     },
     saveSouceCode: function(){
-        this.parameters.post_body = this.sourcecode
+        this.parameters.contents = this.sourcecode
     },
     previewChanges: function(){
         this.preview = true;
@@ -392,12 +415,12 @@ export default {
         var discount = parseInt(this.parameters.discount);
         var price = parseFloat(this.parameters.original_price);
         discounted = (price/100) * discount
-        this.parameters.discounted_price = price - discounted
+        this.parameters.display_price = price - discounted
 
     },
     generateLink: function(){
         let hostname = location.origin;
-        let title = this.parameters.post_title
+        let title = this.parameters.item_title
         let category_name = '';
         for (let index = 0; index < this.category_list.length; index++) {
             if (this.parameters.category_id == this.category_list[index].id){
@@ -405,7 +428,7 @@ export default {
             }
         }
         let url = hostname+'/course/'+category_name+'/'+title;
-        this.parameters.post_link = url.toString().toLowerCase();
+        this.parameters.item_link = url.toString().toLowerCase();
     },
     resetForm: function(){
         this.validated = false;
@@ -426,7 +449,7 @@ export default {
         if(this.parameters.title=="" || this.parameters.category_id=="") {
             this.validated = false
             this.disabled = false;
-            this.parameters.post_link = ''
+            this.parameters.item_link = ''
             this.alertMsg='Kindly fill the category and content title.'
             $("#alertDanger").toast('show')
             return false;
@@ -436,7 +459,7 @@ export default {
             this.alertMsg='Kindly select the display media or uncheck the box to disable it.'
             $("#alertDanger").toast('show')
             return false;
-        }else if(this.parameters.read_more_status==1 && this.parameters.post_link=="") {
+        }else if(this.parameters.read_more_status==1 && this.parameters.item_link=="") {
             this.validated = false
             this.disabled = false;
             this.alertMsg='Kindly generate or paste a navigation link or disable landing page.'

@@ -22,7 +22,10 @@ class MediaController extends Controller
             $record = $record['info'];
             return view('apps.media.manage', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_media')->with('message', json_encode($message));
         }
     }
@@ -36,7 +39,10 @@ class MediaController extends Controller
             $record = $record['info'];
             return view('apps.media.edit', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_media')->with('message', json_encode($message));
         }
     }

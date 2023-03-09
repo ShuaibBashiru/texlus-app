@@ -1,2 +1,3 @@
 <?php
-symlink('/home/texlus/site/storage/app/public', '/home/texlus/public_html/storage');
+symlink('/home/texlusc1/site/storage/app/public', '/home/texlusc1/public_html/storage');
+echo "Created";

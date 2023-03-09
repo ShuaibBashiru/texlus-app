@@ -34,14 +34,13 @@
     </div>
 </template>
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
     name: 'authentication',
     props: ['server_message'],
     
 data(){
     return{
-        settings: appsettings,
+        settings: '',
         alertTitle: '',
         alertMsg: '',
         showOverlay: false,
@@ -61,9 +60,17 @@ data(){
 },
 
 created(){
+    this.getAppSettings();
     this.authenticate();
 },
     methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
     authenticate(){
           $(".toaster").toast('hide')
           this.alertMsg = '';
@@ -74,8 +81,9 @@ created(){
           axios.post('/auth/authenticate', form).then(response => {
             this.errors = '';
             if((response.status != undefined && response.status==200) && (response['data'].data.status==response['data'].data.statusmsg)){
+              this.info = response['data'].data
               setTimeout(function(){
-              window.location.href=response['data'].data.redirect
+              window.location.href = response['data'].data.redirect
               }, 3000)
               }else{
                 this.alertMsg = response['data'].data.msg

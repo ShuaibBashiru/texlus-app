@@ -22,7 +22,10 @@ class AdminMenuGroupController extends Controller
             $record = $record['info'];
             return view('apps.admin_menu_group.manage', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_adminmenugroup')->with('message', json_encode($message));
         }
     }
@@ -173,7 +176,7 @@ class AdminMenuGroupController extends Controller
             $generated_id = str_shuffle($d->format('Ymdhis'));
             $record = [
                 "generated_id" => $generated_id,
-                "group_name" => ucfirst(strtolower($request->input('group_name'))),
+                "group_name" => $request->input('group_name'),
                 "group_icon" => $request->input('group_icon'),
                 "menu_bar" => $request->input('menu_bar'),
                 "created_by" => base64_decode($getSession['userid']),
@@ -236,7 +239,7 @@ class AdminMenuGroupController extends Controller
             $id = base64_decode(base64_decode($request->input('generated_id')));
             $d = new dateTime();
             $record = [
-                "group_name" => ucfirst(strtolower($request->input('group_name'))),
+                "group_name" => $request->input('group_name'),
                 "group_icon" => $request->input('group_icon'),
                 "menu_bar" => $request->input('menu_bar'),
                 "created_by" => base64_decode($getSession['userid']),

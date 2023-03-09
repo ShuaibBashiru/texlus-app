@@ -12,15 +12,15 @@
    </h1>
     <p class="lead mt-3 text-center fade-para fs-6"> <span class="" v-html="info[0].post_summary"> </span> </p>
 </div>
-<div class="col-md-12 mt-4">
+<div class="col-md-12 mt-1">
     <div class="row">
     <div class="col-md-6">
-        <div class="m-1 shadow">
+        <div class="m-1 mt-4 shadow">
         <img :src="info[0].display_media" class="rounded img-fluid grow" :style="'width:'+info[0].media_width+info[0].media_measure+';'+'max-height:'+info[0].media_height+'px;'" alt="">
         </div>
     </div>
         <div class="col-md-6">
-        <div class="m-1">
+        <div class="m-1 mt-4">
             <h4 class="fw-bolder" v-html="content_header.header_title" style="line-height:1.25; letter-spacing: 1px; font-size: 1.8em;"></h4>
             <hr>
             <div class="row">
@@ -40,7 +40,7 @@
                 <div class="col-md-4 text-center mt-3">
                         <a :href="'tel:'+settings.phone_one">
                             <p><i class="bi bi-headphones text-primary display-6"></i></p>
-                            <p class="lead text-muted">Mail us</p>
+                            <p class="lead text-muted">Call us</p>
                         </a>
                 </div>
                 <div class="col-md-12 mt-3">
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
+
 export default {
   name: 'contact',
     data (){
@@ -80,7 +80,7 @@ export default {
         record:false,
         responseStatus: '',
         errors: [],
-        settings:appsettings,
+        settings: '',
         content_header:{
             header_title: "Contact us!",
             header_text: "",
@@ -105,9 +105,17 @@ export default {
     },
 
     created(){
+        this.getAppSettings();
         this.getInfo();
     }, 
     methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+     },
     getInfo: function(){
         var category = this.parameters.category
         axios.get('/api/post/info/'+category, {params:this.parameters}).then(response => {

@@ -28,8 +28,8 @@
         <div class="m-1 mt-2">
                    <label for="lastname">Last Name<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.lastname" @keyup="noSpace('lastname')" id="lastname" minlength="3" maxlength="200" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Last Name/Surname">
+                    
+                    <input type="text" v-model="parameters.lastname" @keyup="noSpace('lastname')" id="lastname" minlength="3" maxlength="200" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Last name">
                 </div>
                 <span class="text-danger" for="" v-if="errors.lastname && errors.lastname != ''"><small> <span v-text="errors.lastname[0]"></span> </small></span>
                 </div>
@@ -39,8 +39,8 @@
                 <div class="m-1 mt-3">
                    <label for="firstname">First Name<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.firstname" @keyup="noSpace('firstname')" minlength="3" maxlength="200" id="firstname" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="First Name">
+                    
+                    <input type="text" v-model="parameters.firstname" @keyup="noSpace('firstname')" minlength="3" maxlength="200" id="firstname" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="First name">
                 </div>
                <span class="text-danger" for="" v-if="errors.firstname && errors.firstname != ''"><small> <span v-text="errors.firstname[0]"></span> </small></span>
                 </div>
@@ -82,7 +82,7 @@
                 <div class="m-1 mt-3">
                 <label for="gender_id">Gender<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
+                    
                     <select class="shadow-none form-control form-control-md form-control-sm-lg" v-model="parameters.gender_id" id="gender_id" required>
                        <option disabled value="" selected>Select</option>
                     <option :value="d.id" v-for="(d, index) in genders" :key="index" v-text="d.gender_name"></option>
@@ -187,15 +187,14 @@
 
 </template>
 <script>
-import phonecodes from '../json/phoneCode'
-import appsettings from '/storage/settings/app.json'
+import phonecodes from '/storage/json/phoneCode'
 export default {
     name: 'signup',
     props: ['server_record', 'server_message'],
     data (){
         return{
         pageName: 'Account',
-        settings: appsettings,
+        settings: '',
         alertTitle: '',
         alertMsg: '',
         showOverlay: false,
@@ -252,10 +251,18 @@ export default {
     },
 
     created(){
+        this.getAppSettings();
         this.getGenders();
         },
 
     methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
     resetForm: function(){
         this.validated = false;
         this.disabled = false;

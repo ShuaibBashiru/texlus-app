@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('pageTitle', 'Upload users')
+@section('pageTitle', 'Upload')
 @section('content')
    <!-- Please note that, these are just default components, 
     any of these can me replaced and modified as the case may be -->
@@ -20,7 +20,6 @@
         <!-- Body component(s) -->
             <div id="contentPanel" class="col-md-10 p-0 mt-5">
             <div class="mb-5 mt-4">
-                
            <upload_batch_user :server_message="{{ session('message') ?? $message ?? json_encode('') }}"></upload_batch_user>
        </div>
 </div>

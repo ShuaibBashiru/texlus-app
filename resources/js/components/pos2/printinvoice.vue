@@ -115,14 +115,13 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
     name: 'pointOfSalePrint2',
     props: ['server_message', 'invoice_id', 'timeInterval'],
     data (){
         return{
         pageName: 'POS Print',
-        settings: appsettings,
+        settings: '',
         error_message: '',
         alertTitle: '',
         alertMsg: '',
@@ -156,10 +155,18 @@ export default {
     },
 
     created(){
+        this.getAppSettings();
     this.getSessionData();
     },
 
     computed:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+     },
         getInvoice:function(){
             this.parameters.invoice_number = this.invoice_id;
             this.setTimeInterVal = this.timeInterval;

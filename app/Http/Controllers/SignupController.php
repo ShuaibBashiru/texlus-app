@@ -137,7 +137,6 @@ class SignupController extends Controller
                 "othername" => ucfirst(strtolower($request->input('othername'))),
                 "phone_one" => $request->input('phone_one'),
                 "email_one" => strtolower($request->input('email_one')),
-                "gender_id" => $request->input('gender_id'),
                 "dob" => $dob,
                 "mob" => $mob,
                 "yob" => $yob,
@@ -159,7 +158,7 @@ class SignupController extends Controller
                     "title" => "Successful",
                     "status" => "success",
                     "statusmsg" => "success",
-                    "msg" => " Your account was created successfully. 
+                    "msg" => "Your account was created successfully. 
                     To continue, kindly click the link that was sent to the email provided to set your password.",
                     "redirect" => "/signin",
                 ];

@@ -80,13 +80,12 @@
 </div>
 </template>
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
     name: 'account_changePassword',
     props: ['server_record', 'server_message'],
     data(){
       return{
-          settings: appsettings,
+          settings: '',
           alertTitle: '',
           alertMsg: '',
           showOverlay: false,
@@ -112,10 +111,18 @@ export default {
 
     },
     created(){
+      this.getAppSettings();
       this.parameters.user_email = this.info.user_email
     },
 
     methods:{
+      getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
       validatePassword: function(){
         this.disabled = true
         var password = this.parameters.pwd;

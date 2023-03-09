@@ -15,34 +15,7 @@ class AuthenticationController extends Controller
     public function index(Request $request){
             return view('apps.auths.authentication');
     }
-    
-    public function access(Request $request){
-        $getSession = $request->session()->get('authentication');
-        $useremail = base64_decode($getSession['useremail']);
-        $authenticate = $this->authenticate($request, $useremail);
-        if ($authenticate['status']) {
-            $returnData = [
-                'title' => 'Successful',
-                'status' => 'success',
-                'statusmsg' => 'success',
-                'msg' => "",
-                'redirect' => '/'.$authenticate['redirect'],
-                'userInfo' => '',
-            ];
-            $dataToJson = new ToJsonResource($returnData);
-            return $dataToJson;
-        }else{
-            $returnData = [
-                'title' => 'Invalid!',
-                'status' => 'failed',
-                'statusmsg' => '',
-                'msg' => $authenticate['msg'],
-                'userInfo' => '',
-            ];
-            $message = json_encode($authenticate['msg']);
-            return view('apps.auths.authenticationFailure', compact('message'));
-        }
-    }
+
 
     public function getHomePage($role_id){
         $query = HomePages::from('landing_page as t1')
@@ -64,13 +37,31 @@ class AuthenticationController extends Controller
         }
     }
 
+    // Check if a page was currently active
+    public function getActivePage($request){
+        if ($request->session()->has('ActiveUrl')) {
+            $info = [
+                'status' => true,
+                'url' => $request->session()->get('ActiveUrl')
+            ];
+            return $info;
+         }else{
+            $info = [
+                'status' => false,
+                'url' =>  ''
+            ];
+            return $info;
+         }
+    }
+
     public function authenticate($request, $email){
         try {
             $user = Auth::
                         from('vw_admin_record as t1')
                         ->join('admin_passwords as t2', 't1.id', '=', 't2.userid')
                         ->where('t1.email_one', '=', $email)
-                        ->get(['t1.id', 't1.lastname', 't1.role_id', 't1.file_url', 't1.generated_id', 't1.firstname', 't1.othername', 't1.email_one'])
+                        ->get(['t1.id', 't1.lastname', 't1.role_id', 't1.file_url', 't1.generated_id', 
+                        't1.firstname', 't1.othername', 't1.email_one', 't1.role_name'])
                         ->first();
                         
             if ($user) {
@@ -90,10 +81,11 @@ class AuthenticationController extends Controller
                 $cookie_value = $getid;
                 setcookie($cookie_name, $cookie_value, time() + (86400), "/");
                 $request->session()->put('securedata', $secure);
-                $request->session()->put('userdata', $user);
+                $request->session()->put('adminSessionData', $user);
+                $activePage = $this->getActivePage($request);
                 $data=[
                     'status'=> true,
-                    'redirect' => $homepage,
+                    'redirect' => $activePage['status']==true? $activePage['url'] : '/'.$homepage,
                     'msg' => '',
 
                 ];
@@ -120,6 +112,33 @@ class AuthenticationController extends Controller
         }
       
     }
-
+    
+    public function access(Request $request){
+        $getSession = $request->session()->get('authentication');
+        $useremail = base64_decode($getSession['useremail']);
+        $authenticate = $this->authenticate($request, $useremail);
+        if ($authenticate['status']) {
+            $returnData = [
+                'title' => 'Successful',
+                'status' => 'success',
+                'statusmsg' => 'success',
+                'msg' => "",
+                'redirect' => $authenticate['redirect'],
+                'userInfo' => '',
+            ];
+            $dataToJson = new ToJsonResource($returnData);
+            return $dataToJson;
+        }else{
+            $returnData = [
+                'title' => 'Invalid!',
+                'status' => 'failed',
+                'statusmsg' => '',
+                'msg' => $authenticate['msg'],
+                'userInfo' => '',
+            ];
+            $dataToJson = new ToJsonResource($returnData);
+            return $dataToJson;
+        }
+    }
  
 }

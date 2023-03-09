@@ -146,7 +146,7 @@
     </div>        
         <div class="form-group col mt-3" v-if="parameters.read_more_status==1">
         <button type="button" class="btn btn-sm btn-primary float-end" data-bs-toggle="modal" data-bs-target="#editorModal" @click="getSourceCode">Source code</button>
-        <Vue2Editor id="editor" v-model="parameters.post_body" class="w-100 editor"/>
+        <VueEditor id="editor" v-model="parameters.post_body" class="w-100 editor"/>
         <span class="text-danger" for="" v-if="errors.post_body && errors.post_body != ''"><small> <span v-text="errors.post_body[0]"></span> </small></span>
         </div>
     </div>
@@ -263,7 +263,7 @@
 
 </template>
 <script>
-import phonecodes from '../json/phoneCode'
+import phonecodes from '/storage/json/phoneCode'
 export default {
     name: 'post_Edit',
     props: ['server_record', 'server_message'],

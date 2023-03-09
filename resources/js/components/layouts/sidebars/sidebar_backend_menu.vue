@@ -28,7 +28,7 @@
       </div>
 
     <div class="accordion-item p-3">
-          <a href="/app/logout" class=""><i class="bi bi-power"></i> <span class="toggleHide"> Log out </span> </a>
+          <a href="/app/logout" class=""><i class="bi bi-power"></i> <span class="toggleHide"> Sign out </span> </a>
       </div>
       </div>
 
@@ -44,7 +44,7 @@
 
 
 <script>
-import appsettings from '/storage/settings/app.json'
+
 export default {
     name: 'sidebar_backend',
     data(){
@@ -62,7 +62,7 @@ export default {
         responseStatus: '',
         errors: [],
         usersession: [],
-        settings: appsettings,
+        settings: '',
         changes: '',
         menuList: [],
         sidebarMenu: [
@@ -74,12 +74,20 @@ export default {
         },
 
   created(){
+    this.getAppSettings();
      this.getSessionData();
      this.getMenus();
 
     },
 
   methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
    getSessionData: function(){
        try {
          if (this.$session.get('usersession')!=undefined && this.$session.get('usersession')!='') {

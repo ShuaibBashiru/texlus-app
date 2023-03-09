@@ -48,6 +48,7 @@
             <select v-model="parameters.menu_bar" class="form-control shadow-none" required :disabled="disabled">
             <option value="" selected>Select</option>
             <option value="Admin Sidebar">Admin Sidebar</option>
+            <option value="User Sidebar">Admin Sidebar</option>
             <option value="Admin TopMenu">Top Menu</option>
             <option value="Web Menu">Web Menu</option>
         </select>
@@ -95,7 +96,7 @@
 </template>
 
 <script>
-import icons from '../json/icons.json'
+import icons from '/storage/json/icons.json'
 export default {
     name: 'AdminMenuGroup_Edit',
     props: ['server_record', 'server_message'],

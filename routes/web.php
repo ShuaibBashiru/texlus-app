@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\CourseEnrolmentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\PageAccessController;
 use App\Http\Controllers\AuthController;
@@ -16,13 +16,13 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StatusesController;
 use App\Http\Controllers\AdminMenuGroupController;
 use App\Http\Controllers\AdminMenuController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\RolePermissionsController;
 use App\Http\Controllers\AdminPagesController;
 use App\Http\Controllers\AdminAccessController;
-use App\Http\Controllers\StatusController;
 use App\Http\Controllers\GendersController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\StateController;
@@ -37,6 +37,13 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\PosController2;
 use App\Http\Controllers\PostCategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProgressController;
+use App\Http\Controllers\EnrolledController;
+use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\PaymentInvoiceController;
+use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\NewsCategoryController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\CourseCategoryController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\NotificationController;
@@ -65,9 +72,9 @@ Route::group(['middleware'=>['revalidate', 'CheckMaintenance']], function(){
     Route::get('/courses', [HomeController::class, 'courses'])->name('courses');
     Route::get('/course', [HomeController::class, 'course_view'])->name('course');
     Route::get('/post', [HomeController::class, 'post_view'])->name('post');
-    // Route::get('/post/{id}', [LandingPageController::class, 'post_landing'])->name('post_page');
-    // Route::get('/course/{id}', [LandingPageController::class, 'course_landing'])->name('course_page');
-
+    Route::get('/page/post/{category}/{title}', [CourseEnrolmentController::class, 'post_landing'])->name('post_page');
+    Route::get('/page/course/{category}/{title}', [CourseEnrolmentController::class, 'course_landing'])->name('course_page');
+    Route::get('/apply/{id}', [CourseEnrolmentController::class, 'order_item']);
     });
 
     Route::group(['middleware'=>['revalidate']], function(){
@@ -85,7 +92,7 @@ Route::group(['middleware'=>['revalidate', 'CheckMaintenance']], function(){
 // End of signup groups
 Route::group(['middleware'=>['revalidate']], function(){
     Route::get('/signup-guide', [SignupController::class, 'index'])->name('signup_guide');
-    Route::get('/app/signup', [SignupController::class, 'signup'])->name('signup_page');
+    Route::get('/signup', [SignupController::class, 'signup'])->name('signup_page');
     Route::post('/signup/create', [SignupController::class, 'create'])->name('signup_request');
     Route::get('/signup-verify', [SignupController::class, 'signup'])->name('signup_verify');
 });
@@ -99,10 +106,9 @@ Route::group(['middleware'=>['revalidate', 'confirmReLogIn']], function(){
 });
 // End of check if session active
 
-Route::middleware(['revalidate'])->group(function(){
 
-// Status controller
-Route::get('/status/list', [StatusController::class, 'list_items'])->name('list_status');
+
+Route::middleware(['revalidate'])->group(function(){
 
 // Gender Controller
 Route::get('/genders/list', [GendersController::class, 'gender_list'])->name('list_genders');
@@ -116,7 +122,6 @@ Route::get('/state/list', [StateController::class, 'list_items'])->name('list_st
 // City Controller
 Route::get('/city/list', [CitiesController::class, 'list_items'])->name('list_city');
 });
-
 
 // Authentication and Security // ? Revalidate: This take care of browser from cathing protected routes
 Route::middleware(['revalidate', 'customAuthentication', 'accessCheck'])->group(function(){
@@ -138,9 +143,11 @@ Route::get('/user/chart', [ChartsController::class, 'users'])->name('list_user_c
 // Users Controller
 Route::get('/app/user/list', [UserController::class, 'list'])->name('list_user');
 Route::get('/app/user/profile/{id}', [UserController::class, 'profile'])->name('user_profile');
+Route::get('/app/user/edit/attachment/{id}', [UserController::class, 'attachment'])->name('user_attachment');
 Route::get('/app/user/create', [UserController::class, 'createRecord'])->name('create_user');
 Route::get('/app/user/upload', [UserController::class, 'uploadBatch'])->name('upload_user');
 Route::get('/app/user/manage/{id}', [UserController::class, 'manage'])->name('manage_user');
+Route::get('/app/user/edit/profile/{id}', [UserController::class, 'edit_profile'])->name('edit_user_profile');
 Route::get('/app/user/edit/name/{id}', [UserController::class, 'edit_name'])->name('edit_user_name');
 Route::get('/app/user/edit/dob/{id}', [UserController::class, 'edit_dob'])->name('edit_user_dob');
 Route::get('/app/user/edit/gender/{id}', [UserController::class, 'edit_gender'])->name('edit_user_gender');
@@ -150,6 +157,10 @@ Route::get('/app/user/edit/email/{id}', [UserController::class, 'edit_email'])->
 Route::get('/app/user/edit/password/{id}', [UserController::class, 'edit_password'])->name('edit_user_password');
 Route::post('/user/upload', [UserController::class, 'upload'])->name('upload_user_request');
 Route::post('/user/create', [UserController::class, 'create'])->name('create_user_request');
+Route::post('/user/profile/update', [UserController::class, 'update_profile'])->name('update_user_profile_request');
+Route::post('/user/attachment/create', [UserController::class, 'create_attachment'])->name('create_user_attachment_request');
+Route::post('/user/attachment/update', [UserController::class, 'update_attachment'])->name('update_user_attachment_request');
+Route::post('/user/attachment/delete', [UserController::class, 'delete_attachment'])->name('dalete_user_attachment_request');
 Route::post('/user/name/update', [UserController::class, 'update_name'])->name('update_user_name_request');
 Route::post('/user/dob/update', [UserController::class, 'update_dob'])->name('update_user_dob_request');
 Route::post('/user/gender/update', [UserController::class, 'update_gender'])->name('update_user_gender_request');
@@ -225,6 +236,16 @@ Route::delete('/role/trash', [RoleController::class, 'trash'])->name('trash_role
 Route::post('/role/update', [RoleController::class, 'update_record'])->name('update_role_request');
 Route::get('/role/manage/status', [RoleController::class, 'manage_status'])->name('manage_role_status');
 
+// Statuses
+Route::get('/app/statuses/list', [StatusesController::class, 'list'])->name('list_statuses');
+Route::get('/app/statuses/manage/{id}', [StatusesController::class, 'manage'])->name('manage_statuses');
+Route::get('/statuses/list', [StatusesController::class, 'listAll'])->name('list_statuses_request');
+Route::post('/statuses/create', [StatusesController::class, 'create'])->name('create_statuses_request');
+Route::get('/statuses/status/updatebatch', [StatusesController::class, 'status_update_batch'])->name('update_statuses_status_request');
+Route::delete('/statuses/trash', [StatusesController::class, 'trash'])->name('trash_statuses_request');
+Route::post('/statuses/update', [StatusesController::class, 'update_record'])->name('update_statuses_request');
+Route::get('/statuses/manage/status', [StatusesController::class, 'manage_status'])->name('manage_statuses_status');
+
 // Access
 Route::get('/app/access/upload', [AccessController::class, 'uploadBatch'])->name('upload_access');
 Route::get('/app/access/list', [AccessController::class, 'list'])->name('list_access');
@@ -289,6 +310,78 @@ Route::get('/post/status/updatebatch', [PostController::class, 'status_update_ba
 Route::delete('/post/trash', [PostController::class, 'trash'])->name('trash_post_request');
 Route::post('/post/update', [PostController::class, 'update_record'])->name('update_post_request');
 
+// News category
+Route::get('/app/newscategory/list', [NewscategoryController::class, 'list'])->name('list_newscategory');
+Route::get('/newscategory/list', [NewscategoryController::class, 'listAll'])->name('list_newscategory_request');
+Route::post('/newscategory/create', [NewscategoryController::class, 'create'])->name('create_newscategory_request');
+Route::get('/newscategory/status/updatebatch', [NewscategoryController::class, 'status_update_batch'])->name('update_newscategory_status_request');
+Route::delete('/newscategory/trash', [NewscategoryController::class, 'trash'])->name('trash_newscategory_request');
+Route::post('/newscategory/update', [NewscategoryController::class, 'update_record'])->name('update_newscategory_request');
+Route::get('/newscategory/record/{id}', [NewscategoryController::class, 'record'])->name('record_newscategory');
+
+// News
+Route::get('/app/news/list', [NewsController::class, 'list'])->name('list_news');
+Route::get('/app/news/manage/{id}', [NewsController::class, 'manage'])->name('manage_news');
+Route::get('/app/news/edit/{id}', [NewsController::class, 'edit'])->name('edit_news');
+Route::get('/app/news/create', [NewsController::class, 'createRecord'])->name('create_news');
+Route::get('/news/list', [NewsController::class, 'listAll'])->name('list_news_request');
+Route::post('/news/create', [NewsController::class, 'create'])->name('create_news_request');
+Route::get('/news/status/updatebatch', [NewsController::class, 'status_update_batch'])->name('update_news_status_request');
+Route::delete('/news/trash', [NewsController::class, 'trash'])->name('trash_news_request');
+Route::post('/news/update', [NewsController::class, 'update_record'])->name('update_news_request');
+
+// Progress
+Route::get('/app/progress/list', [ProgressController::class, 'list'])->name('list_progress');
+Route::get('/app/progress/manage/{id}', [ProgressController::class, 'manage'])->name('manage_progress');
+Route::get('/app/progress/edit/{id}', [ProgressController::class, 'edit'])->name('edit_progress');
+Route::get('/app/progress/create', [ProgressController::class, 'createRecord'])->name('create_progress');
+Route::get('/progress/list', [ProgressController::class, 'listAll'])->name('list_progress_request');
+Route::post('/progress/create', [ProgressController::class, 'create'])->name('create_progress_request');
+Route::get('/progress/status/updatebatch', [ProgressController::class, 'status_update_batch'])->name('update_progress_status_request');
+Route::delete('/progress/trash', [ProgressController::class, 'trash'])->name('trash_progress_request');
+Route::post('/progress/update', [ProgressController::class, 'update_record'])->name('update_progress_request');
+
+// Enrolled
+Route::get('/app/enrolled/list', [EnrolledController::class, 'list'])->name('list_enrolled');
+Route::get('/app/enrolled/manage/{id}', [EnrolledController::class, 'manage'])->name('manage_enrolled');
+Route::get('/app/enrolled/edit/{id}', [EnrolledController::class, 'edit'])->name('edit_enrolled');
+Route::get('/app/enrolled/create', [EnrolledController::class, 'createRecord'])->name('create_enrolled');
+Route::get('/enrolled/list', [EnrolledController::class, 'listAll'])->name('list_enrolled_request');
+Route::post('/enrolled/create', [EnrolledController::class, 'create'])->name('create_enrolled_request');
+Route::get('/enrolled/status/updatebatch', [EnrolledController::class, 'status_update_batch'])->name('update_enrolled_status_request');
+Route::delete('/enrolled/trash', [EnrolledController::class, 'trash'])->name('trash_enrolled_request');
+Route::post('/enrolled/update', [EnrolledController::class, 'update_record'])->name('update_enrolled_request');
+
+// Invoice
+Route::get('/app/paymentinvoice/portal', [PaymentInvoiceController::class, 'portal'])->name('paymentinvoice_portal');
+Route::get('/app/paymentinvoice/invoices', [PaymentInvoiceController::class, 'list'])->name('paymentinvoice_invoices');
+Route::get('/app/paymentinvoice/printinvoice', [PaymentInvoiceController::class, 'invoice'])->name('paymentinvoice_print_invoices');
+Route::post('/paymentinvoice/create', [PaymentInvoiceController::class, 'create'])->name('paymentinvoice_create_request');
+Route::get('/paymentinvoice/invoices', [PaymentInvoiceController::class, 'listAll'])->name('paymentinvoice_invoices_request');
+Route::get('/paymentinvoice/invoice', [PaymentInvoiceController::class, 'get_invoice'])->name('paymentinvoice_getinvoice_request');
+Route::get('/paymentinvoice/printinvoice', [PaymentInvoiceController::class, 'printinvoice'])->name('paymentinvoice_print_invoices_request');
+
+// Payments
+Route::get('/app/payments/list', [PaymentsController::class, 'list'])->name('list_payments');
+Route::get('/app/payments/manage/{id}', [PaymentsController::class, 'manage'])->name('manage_payments');
+Route::get('/app/payments/edit/{id}', [PaymentsController::class, 'edit'])->name('edit_payments');
+Route::get('/app/payments/create', [PaymentsController::class, 'createRecord'])->name('create_payments');
+Route::get('/payments/list', [PaymentsController::class, 'listAll'])->name('list_payments_request');
+Route::post('/payments/create', [PaymentsController::class, 'create'])->name('create_payments_request');
+Route::get('/payments/status/updatebatch', [PaymentsController::class, 'status_update_batch'])->name('update_payments_status_request');
+Route::delete('/payments/trash', [PaymentsController::class, 'trash'])->name('trash_payments_request');
+Route::post('/payments/update', [PaymentsController::class, 'update_record'])->name('update_payments_request');
+
+// Transactions
+Route::get('/app/transactions/list', [TransactionsController::class, 'list'])->name('list_transactions');
+Route::get('/app/transactions/manage/{id}', [TransactionsController::class, 'manage'])->name('manage_transactions');
+Route::get('/app/transactions/edit/{id}', [TransactionsController::class, 'edit'])->name('edit_transactions');
+Route::get('/app/transactions/create', [TransactionsController::class, 'createRecord'])->name('create_transactions');
+Route::get('/transactions/list', [TransactionsController::class, 'listAll'])->name('list_transactions_request');
+Route::post('/transactions/create', [TransactionsController::class, 'create'])->name('create_transactions_request');
+Route::get('/transactions/status/updatebatch', [TransactionsController::class, 'status_update_batch'])->name('update_transactions_status_request');
+Route::delete('/transactions/trash', [TransactionsController::class, 'trash'])->name('trash_transactions_request');
+Route::post('/transactions/update', [TransactionsController::class, 'update_record'])->name('update_transactions_request');
 
 // Media
 Route::get('/app/media/list', [MediaController::class, 'list'])->name('list_media');
@@ -300,7 +393,6 @@ Route::post('/media/create', [MediaController::class, 'create'])->name('create_m
 Route::get('/media/status/updatebatch', [MediaController::class, 'status_update_batch'])->name('update_media_status_request');
 Route::delete('/media/trash', [MediaController::class, 'trash'])->name('trash_media_request');
 Route::post('/media/update', [MediaController::class, 'update_record'])->name('update_media_request');
-
 
 // Course category
 Route::get('/app/coursecategory/list', [CourseCategoryController::class, 'list'])->name('list_coursecategory');
@@ -330,7 +422,6 @@ Route::get('/notification/status/updatebatch', [NotificationController::class, '
 Route::delete('/notification/trash', [NotificationController::class, 'trash'])->name('trash_notification_request');
 Route::post('/notification/update', [NotificationController::class, 'update_record'])->name('update_notification_request');
 Route::get('/notification/record/{id}', [NotificationController::class, 'record'])->name('record_notification');
-
 
 // Pos
 Route::get('/app/pos/portal', [PosController::class, 'portal'])->name('pos_portal');

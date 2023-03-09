@@ -100,7 +100,7 @@
 
 <script>
 export default {
-    name: 'Access_New',
+    name: 'Access_new',
     props: ['server_record'],
     data (){
         return{

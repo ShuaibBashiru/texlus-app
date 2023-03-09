@@ -33,7 +33,7 @@ class SignUpRequest extends FormRequest
             'dob' => 'nullable|numeric',
             'mob' => 'nullable|numeric',
             'yob' => 'nullable|numeric',
-            'gender_id' => 'required|numeric',
+            'gender_id' => 'nullable|numeric',
         ];
     }
 
@@ -45,7 +45,7 @@ class SignUpRequest extends FormRequest
             'dob.numeric' => 'The :attribute provided is invalid.',
             'mob.numeric' => 'The :attribute provided is invalid.',
             'yob.numeric' => 'The :attribute provided is invalid.',
-            'gender_id.required' => 'The :attribute provided is invalid.',
+            'gender_id.numeric' => 'The :attribute provided is invalid.',
             'email_one.unique' => 'An account with the email address already exist, try another.',
             'phone_one.unique' => 'An account with the phone number already exist, try another.',
 

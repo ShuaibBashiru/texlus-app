@@ -13,7 +13,7 @@
       <div class="row mt-3">
         <div class="col-md-12">
           <h4 class="lead">Profile picture</h4>
-          <p class="p-1 m-0 text-muted"><small>This profile picture is an identity to recognize you across account activities. Upload a valid picture for easy recognition.</small></p>
+          <p class="p-1 m-0 text-muted"><small>This profile picture is an identity to recognize you across your account's activities. Upload a valid picture for easy recognition.</small></p>
         </div>
       </div>
           <hr class="m-1" />

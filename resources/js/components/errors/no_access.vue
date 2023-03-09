@@ -29,17 +29,28 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json';
 export default {
     name: 'No_Acces',
     props: ['server_message'],
     data (){
         return{
         pageName: 'No Access',
-        settings: appsettings,
+        settings: '',
         showOverlay: false,
         info: [],
     }
     },
+    created(){
+        this.getAppSettings();
+    },
+    methods: {
+        getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
+    }
     }
 </script>

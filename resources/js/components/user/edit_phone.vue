@@ -1,47 +1,10 @@
 <template>
 <div class="">
     <b-overlay class="position-fixed w-100 h-100" :show="showOverlay" no-wrap spinner-variant="primary" rounded="sm" spinner-type="border" z-index="999999" />
-  <notification :alertTitle="alertTitle" :alertMsg="alertMsg" />     
-<div class="container-fluid">
+  <notification :alertTitle="alertTitle" :alertMsg="alertMsg"></notification>
+<div class="container-fluid p-0">
     <server-alert :server_message="server_message" />
     <a href="#" id="topLink"></a>
-        <div class="row">
-        <div class="col-md-5">
-        <div class="mt-1 mb-2">
-            <h5 class="mt-2 ms-0"> <span class="bi bi-chevron-left" onclick="history.back()" role="button"></span> <span>Manage</span><span class="text-muted">/User </span> </h5>
-        </div>
-        </div>
-        <div class="col-md-7 d-flex justify-content-end dropdown">
-        <div class="mt-1 mb-2">
-        
-</div>
-</div>
-</div>
-
-<div class="row">
-<div class="col-md-12">
-    <div class="m-1 border rounded-3">
-    <div class="row">
-        <div class="col-md-10">
-        <div class="m-3 mb-1">
-            <h5 class="display-7 ft-weight-light">Account <i class="bi bi-chevron-right"></i> <span class="text-capitalize p-1 m-0 text-secondary" v-html="(info.lastname)? info.lastname+' '+info.firstname+' '+info.othername : ''"> </span></h5>
-            <p class="text-muted">NB: Any changes made here will reflect on this account's activities, please be certain of this action before you proceed.</p>
-        </div>
-        </div>
-        <div class="col-md-2 p-2">
-        <div class="m-3">
-                 <div class="text-center">
-                     <figure>
-                     <img :src="userProfilePassport" class="rounded-circle" height="120" width="120" alt="Passport">
-                    </figure>
-                </div>
-        </div>
-        </div>
-    </div>
-        </div>
-        </div>
-    </div>
-
 
 <div class="row">
 <div class="col-md-12">
@@ -51,7 +14,7 @@
         <div class="m-3 mt-1">
   <form @submit.prevent="validateForm" id="formChange">
             <fieldset class="border p-2 pt-0">
-                <legend class="w-auto" style="float: none; padding: inherit;"><small>Contact lines</small></legend>
+                <legend class="w-auto" style="float: none; padding: inherit;"><small>Phone lines</small></legend>
             <div class="row">
             <div class="col-md-12">
             </div>
@@ -114,7 +77,7 @@
 </template>
 
 <script>
-import phonecodes from '../json/phoneCode'
+import phonecodes from '/storage/json/phoneCode'
 export default {
     name: 'user_phone_edit',
     props: ['server_record', 'server_message'],
@@ -267,7 +230,7 @@ export default {
             this.alertMsg=response['data'].data.msg;
             $("#alertPrimary").toast('show')
             setTimeout(function(){
-            window.history.back()
+            window.location.reload()
             }, 2000)
             }else if(response['data'].data.status=='failed'){
             this.alertMsg=response['data'].data.msg;

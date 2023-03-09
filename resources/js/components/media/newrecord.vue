@@ -117,9 +117,9 @@
 </template>
 
 <script>
-import phonecodes from '../json/phoneCode'
+import phonecodes from '/storage/json/phoneCode'
 export default {
-    name: 'Media_New',
+    name: 'Media_new',
     props: ['server_record', 'server_message'],
     data (){
         return{

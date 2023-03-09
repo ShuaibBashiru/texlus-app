@@ -1,7 +1,8 @@
+
 @extends('layouts.backend')
-@section('pageTitle', 'Edit Date of Birth')
+@section('pageTitle', 'Edit')
 @section('content')
-    <!-- Please note that, these are just default components, 
+   <!-- Please note that, these are just default components, 
     any of these can me replaced and modified as the case may be -->
     <div class="container-fluid">
         <div class="row">
@@ -20,8 +21,16 @@
         <!-- Body component(s) -->
             <div id="contentPanel" class="col-md-10 p-0 mt-5">
             <div class="mb-5 mt-4">
-                
-           <edit_user_dob :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"></edit_user_dob>
+                <back-button-user :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"></back-button-user>
+                <div class="row m-0">
+                    <div class="col-md-4">
+                    <user-menu-list :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"/>
+                    </div>
+                    <div class="col-md-8 ps-0">
+                    <edit_user_dob :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"></edit_user_dob>
+                    </div>
+                </div>
+           
         </div>
 
        </div>

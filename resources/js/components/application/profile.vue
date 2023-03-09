@@ -197,14 +197,12 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
-
 export default {
     name: 'account_Profile',
     props: ['server_record', 'server_message'],
     data (){
         return{
-        settings: appsettings,
+        settings: '',
         pageName: 'My Account',
         alertTitle: '',
         alertMsg: '',
@@ -251,6 +249,7 @@ export default {
     },
 
     created(){
+        this.getAppSettings();
        this.getInfo();
     },
 
@@ -262,6 +261,13 @@ export default {
     },
         
     methods:{
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
            getInfo: function(){
             this.parameters.personal_id = this.info.personal_id;
             this.userProfilePassport = this.info.file_url ? this.info.file_url : this.userProfilePassport;

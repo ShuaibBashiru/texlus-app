@@ -73,7 +73,7 @@
 
 <script>
 export default {
-    name: 'Course_category_New',
+    name: 'Course_category_new',
     props: ['server_record', 'server_message'],
     data (){
         return{

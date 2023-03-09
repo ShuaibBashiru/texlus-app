@@ -8,12 +8,13 @@
     <div class="row">
         <div class="col-md-5 ps-2">
         <div class="mt-1 mb-2">
-            <h5 class="mt-2 ms-0 text-muted"><i class="bi bi-chevron-left" onclick="history.back()" title="Go back" role="button"></i> <span v-text="pageName"></span></h5>
+              <a :href="'../list'"><h5 class="mt-2 ms-0 text-muted" title="Go back" role="button"><i class="bi bi-chevron-left"></i> <span>Back</span></h5></a>
         </div>
         </div>
         
 <div class="col-md-7 d-flex justify-content-end dropdown pe-3">
-<div class="mt-1 mb-2">
+    <div class="mt-1 mb-2">
+    <a :href="'../edit/profile/'+info.generated_id" class="btn btn-outline-primary"> Update  <i class="bi bi-gear"></i></a>
 </div>
 </div>
 </div>
@@ -24,22 +25,117 @@
     <div class="row">
         <div class="col-md-10">
         <div class="m-3 mb-1">
-            <h5 class="display-7">Account</h5>
+            <h5 class="display-7">Profile</h5>
             <p class="text-muted">Manage personal information such as basic information (Name, date of birth and others), contact, security settings and other activities.</p>
         </div>
         </div>
         <div class="col-md-2 p-2 text-center">
         <div class="">
                  <div class="text-center">
-                     <figure>
+                     <figure class="mt-2">
                      <img :src="userProfilePassport" class="rounded-circle" height="120" width="120" alt="Passport">
-                    <figcaption class="mt-1 text-primary" role="button" data-bs-toggle="modal" data-bs-target="#UserPassportModal"> <u>Change</u> </figcaption>
                     </figure>
                 </div>
         </div>
         </div>
     </div>
 
+        </div>
+        </div>
+    </div>
+
+
+<div class="row">
+<div class="col-md-12 content">
+    <div class="m-1 border rounded-3">
+    <div class="row">
+        <div class="col-md-12">
+        <div class="m-3">
+            <h5 class="display-7">Basic info</h5>
+        </div>
+        </div>
+    <div class="col-md-12">
+        <div class="m-3 mt-1">
+        <div class="list-group">
+        <div class="list-group-item">
+           <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>ACCOUNT ID</small></p></div>
+            <div class="col-md-9"><p class="text-uppercase p-1 m-0" v-html="(parameters.personal_id ? parameters.personal_id: '<i class=text-danger>None</i>')"></p></div>
+        </div>
+        </div>
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>NAME</small></p></div>
+            <div class="col-md-9"><p class="text-capitalize p-1 m-0" v-html="info.lastname+' '+info.firstname+' '+info.othername"></p></div>
+        </div>
+        </div>
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>BIRTHDAY</small></p></div>
+            <div class="col-md-9"><p class="text-capitalize p-1 m-0" v-html="info.date_of_birth ? info.date_of_birth : '<i class=text-danger>None</i>'"></p></div>
+        </div>
+        </div>
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>GENDER</small></p></div>
+            <div class="col-md-9"><p class="text-capitalize p-1 m-0" v-html="info.gender_name ? info.gender_name : '<i class=text-danger>None</i>' "></p></div>
+        </div>
+        </div>
+    
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Email</small></p></div>
+            <div class="col-md-9"><p class="text-lowercase p-1 m-0" v-html="(info.email_one ? info.email_one: '<i class=text-danger>None</i>')+ '<br/>' + (info.email_two ? info.email_two:'')"></p></div>
+        </div>
+        </div>
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Phone Number</small></p></div>
+            <div class="col-md-9">
+                <p class="text-capitalize p-1 m-0" v-html="(info.phone_code? info.phone_code:'') + (info.phone_one ? info.phone_one : '<i class=text-danger>None</i>')"></p>
+                <p class="text-capitalize p-1 m-0" v-if="info.phone_two" v-html="info.phone_two ? info.phone_two : ''"></p>
+            </div>
+        </div>
+        </div>
+
+        </div>  
+        </div>
+        </div>
+    </div>
+
+        </div>
+        </div>
+</div>
+
+
+<div class="row">
+<div class="col-md-12 content">
+    <div class="m-1 border rounded-3">
+    <div class="row">
+        <div class="col-md-12">
+        <div class="m-3">
+            <h5 class="display-7">Contact address</h5>
+        </div>
+        </div>
+    <div class="col-md-12">
+        <div class="m-3 mt-1">
+            <div class="list-group">
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>State/Country</small></p></div>
+            <div class="col-md-9"><p class="text-capitalize p-1 m-0" v-html="(info.state_name ? info.state_name : '<i class=text-danger>None</i>') +' / '+ (info.country_name ? info.country_name : '<i class=text-danger>None</i>')"></p></div>
+        </div>
+        </div>
+        <div class="list-group-item">
+        <div class="row">
+            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Address</small></p></div>
+            <div class="col-md-9"><p class="text-capitalize p-1 m-0" v-html="info.address_one ? info.address_one : '<i class=text-danger>None</i>'"></p></div>
+        </div>
+        </div>
+        </div>  
+        </div>
+        </div>
+    </div>
         </div>
         </div>
     </div>
@@ -88,141 +184,10 @@
         </div>
         </div>
     </div>
-
         </div>
         </div>
 </div>
 
-
-<div class="row">
-<div class="col-md-12 content">
-    <div class="m-1 border rounded-3">
-    <div class="row">
-        <div class="col-md-12">
-        <div class="m-3">
-            <h5 class="display-7">Basic info</h5>
-        </div>
-        </div>
-    <div class="col-md-12">
-        <div class="m-3 mt-1">
-            <div class="list-group">
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>NAME</small></p></div>
-            <div class="col-md-6"><p class="text-capitalize p-1 m-0" v-html="info.lastname+' '+info.firstname+' '+info.othername"></p></div>
-            <div class="col-md-3"><p class="text-capitalize p-1 m-0"><a class="btn-link" :href="'../edit/name/'+info.generated_id"><span class="text-primary float-end"> <u>Modify</u> </span></a></p></div>
-        </div>
-        </div>
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>BIRTHDAY</small></p></div>
-            <div class="col-md-6"><p class="text-capitalize p-1 m-0" v-html="info.date_of_birth ? info.date_of_birth : '<i class=text-danger>None</i>'"></p></div>
-            <div class="col-md-3"><p class="text-capitalize p-1 m-0"><a class="btn-link" :href="'../edit/dob/'+info.generated_id"><span class="text-primary float-end"> <u>Modify</u> </span></a></p></div>
-        </div>
-        </div>
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>GENDER</small></p></div>
-            <div class="col-md-6"><p class="text-capitalize p-1 m-0" v-html="info.gender_name ? info.gender_name : '<i class=text-danger>None</i>' "></p></div>
-            <div class="col-md-3"><p class="text-capitalize p-1 m-0"><a class="btn-link" :href="'../edit/gender/'+info.generated_id"><span class="text-primary float-end"> <u>Modify</u> </span></a></p></div>
-        </div>
-        </div>
-        </div>  
-        </div>
-        </div>
-    </div>
-
-        </div>
-        </div>
-</div>
-
-
-<div class="row">
-<div class="col-md-12 content">
-    <div class="m-1 border rounded-3">
-    <div class="row">
-        <div class="col-md-12">
-        <div class="m-3">
-            <h5 class="display-7">Contact address</h5>
-        </div>
-        </div>
-    <div class="col-md-12">
-        <div class="m-3 mt-1">
-            <div class="list-group">
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>State/Country</small></p></div>
-            <div class="col-md-6"><p class="text-capitalize p-1 m-0" v-html="(info.state_name ? info.state_name : '<i class=text-danger>None</i>') +' / '+ (info.country_name ? info.country_name : '<i class=text-danger>None</i>')"></p></div>
-            <div class="col-md-3"></div>
-        </div>
-        </div>
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Address</small></p></div>
-            <div class="col-md-6"><p class="text-capitalize p-1 m-0" v-html="info.address_one ? info.address_one : '<i class=text-danger>None</i>'"></p></div>
-            <div class="col-md-3"></div>
-        </div>
-        </div>
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6"></div>
-            <div class="col-md-3"><p class="text-capitalize p-1 m-0"><a a class="btn-link" :href="'../edit/contactaddress/'+info.generated_id"><span class="text-primary float-end"> <u>Update</u> </span></a></p></div>
-        </div>
-        </div>
-        </div>  
-        </div>
-        </div>
-    </div>
-
-        </div>
-        </div>
-    </div>
-
-<div class="row">
-<div class="col-md-12 content">
-    <div class="m-1 border rounded-3">
-    <div class="row">
-        <div class="col-md-12">
-        <div class="m-3">
-            <h5 class="display-7">Account security</h5>
-        </div>
-        </div>
-    <div class="col-md-12">
-        <div class="m-3 mt-1">
-            <div class="list-group">
-        <div class="list-group-item">
-           <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>ACCOUNT ID</small></p></div>
-            <div class="col-md-6"><p class="text-lowercase p-1 m-0" v-html="(parameters.personal_id ? parameters.personal_id: '<i class=text-danger>None</i>')"></p></div>
-            <div class="col-md-3"></div>
-        </div>
-        </div>
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Email</small></p></div>
-            <div class="col-md-6"><p class="text-lowercase p-1 m-0" v-html="(info.email_one ? info.email_one: '<i class=text-danger>None</i>')+ '<br/>' + (info.email_two ? info.email_two:'')"></p></div>
-            <div class="col-md-3"><p class="text-capitalize p-1 m-0"></p></div>
-        </div>
-        </div>
-        <div class="list-group-item">
-        <div class="row">
-            <div class="col-md-3"><p class="text-uppercase p-1 m-0 text-muted"><small>Phone Number</small></p></div>
-            <div class="col-md-6">
-                <p class="text-capitalize p-1 m-0" v-html="(info.phone_code? info.phone_code:'') + (info.phone_one ? info.phone_one : '<i class=text-danger>None</i>')"></p>
-                <p class="text-capitalize p-1 m-0" v-if="info.phone_two" v-html="info.phone_two ? info.phone_two : ''"></p>
-            </div>
-            <div class="col-md-3"><p class="text-capitalize p-1 m-0"><a class="btn-link" :href="'../edit/phone/'+info.generated_id"><span class="text-primary float-end"> <u>Update</u> </span></a></p></div>
-        </div>
-        </div>
-        </div>  
-        </div>
-        </div>
-    </div>
-
-        </div>
-        </div>
-    </div>
 
     </div>
     </div>
@@ -234,7 +199,7 @@ export default {
     props: ['server_record', 'server_message'],
     data (){
         return{
-        pageName: 'User',
+        pageName: "User",
         alertTitle: '',
         alertMsg: '',
         showOverlay: false,
@@ -279,10 +244,9 @@ export default {
     },
 
     created(){
-        this.getStatus();
         this.parameters.personal_id = this.info.personal_id
         this.userProfilePassport = this.info.file_url ? this.info.file_url : this.userProfilePassport
-
+        this.getStatus();
     },
 
     computed:{
@@ -293,10 +257,10 @@ export default {
     },
         
     methods:{
-      getStatus: function(){
+ getStatus: function(){
         $(".toaster").toast('hide')
         this.showOverlay=true;
-        axios.get('/status/list', {params:this.parameters}).then(response => {
+        axios.get('/api/status/list', {params:this.parameters}).then(response => {
             this.button=this.btntxt;
             this.showOverlay=false;
             this.errors = '';
@@ -375,8 +339,6 @@ export default {
             }
         })
     },
-
-
 
         }
 

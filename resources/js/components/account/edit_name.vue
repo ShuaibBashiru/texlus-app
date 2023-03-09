@@ -60,8 +60,8 @@
         <div class="m-1 mt-3">
                    <label for="lastname">Last Name<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.lastname" @keyup="noSpace('lastname')" id="lastname" minlength="3" maxlength="200" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Last Name/Surname" :disabled="disabled" readonly>
+                    
+                    <input type="text" v-model="parameters.lastname" @keyup="noSpace('lastname')" id="lastname" minlength="3" maxlength="200" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Last name" :disabled="disabled">
                 </div>
                 <span class="text-danger" for="" v-if="errors.lastname && errors.lastname != ''"><small> <span v-text="errors.lastname[0]"></span> </small></span>
                 </div>
@@ -71,8 +71,8 @@
                 <div class="m-1 mt-3">
                    <label for="firstname">First Name<sup title="Required field">*</sup></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.firstname" @keyup="noSpace('firstname')" minlength="3" maxlength="200" id="firstname" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="Firstname" :disabled="disabled">
+                    
+                    <input type="text" v-model="parameters.firstname" @keyup="noSpace('firstname')" minlength="3" maxlength="200" id="firstname" class="shadow-none form-control form-control-md form-control-sm-lg" required placeholder="First name" :disabled="disabled">
                 </div>
                <span class="text-danger" for="" v-if="errors.firstname && errors.firstname != ''"><small> <span v-text="errors.firstname[0]"></span> </small></span>
                 </div>
@@ -82,8 +82,8 @@
                 <div class="m-1 mt-3">
                 <label for="othername">Other name  <span class="text-muted">(Optional)</span></label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
-                    <input type="text" v-model="parameters.othername" @keyup="noSpace('othername')" minlength="0" maxlength="200" id="othername" class="shadow-none form-control form-control-md form-control-sm-lg" placeholder="Other Name" :disabled="disabled">
+                    
+                    <input type="text" v-model="parameters.othername" @keyup="noSpace('othername')" minlength="0" maxlength="200" id="othername" class="shadow-none form-control form-control-md form-control-sm-lg" placeholder="Other name" :disabled="disabled">
                 </div>
                 <span class="text-danger" for="" v-if="errors.othername && errors.othername != ''"><small> <span v-text="errors.othername[0]"></span> </small></span>
                 </div>

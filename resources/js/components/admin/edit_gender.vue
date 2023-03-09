@@ -8,7 +8,7 @@
         <div class="row">
         <div class="col-md-5 ps-2">
         <div class="mt-1 mb-2">
-            <h5 class="mt-2 ms-0"> <span class="bi bi-chevron-left" onclick="history.back()" role="button"></span> <span>Manage</span><span class="text-muted">/Admin </span> </h5>
+            <h5 class="mt-2 ms-0"> <span class="bi bi-chevron-left" onclick="history.back()" role="button"></span> <span>Manage</span><span class="text-muted">/admin </span> </h5>
         </div>
         </div>
         <div class="col-md-7 d-flex justify-content-end dropdown pe-1">
@@ -59,7 +59,7 @@
      <div class="col-md-12">
                 <div class="m-1 mt-3">
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi-person"></i></span>
+                    
                     <select class="shadow-none form-control form-control-md form-control-sm-lg" v-model="parameters.gender_id" id="gender_id" required :disabled="disabled">
                        <option disabled value="" selected>Select</option>
                     <option :value="d.id" v-for="(d, index) in genders" :key="index" v-text="d.gender_name"></option>

@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
   name: 'home',
     data (){
@@ -30,14 +29,22 @@ export default {
         record:false,
         responseStatus: '',
         errors: [],
-        settings:appsettings,
+        settings: '',
 
     }
     },
 
     created(){
+      this.getAppSettings();
     }, 
     methods:{
+      getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+     },
     },
 
 

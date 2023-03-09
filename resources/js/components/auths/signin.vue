@@ -53,7 +53,7 @@
 
 <div class="row">
   <div class="col-12">
-    <p class="text-center text-light">I do not have an Account? <a href="/app/signup" class="text-primary text-light linkUnderlineHover"> Sign up </a></p>
+    <p class="text-center text-light">I do not have an Account? <a href="/signup" class="text-primary text-light linkUnderlineHover"> Sign up </a></p>
     </div>
   <div class="col-12">
         <p class="text-center"><a href="/" class="text-light linkUnderlineHover" style="opacity:0.7;">Home</a></p>
@@ -71,13 +71,12 @@
 </div>
 </template>
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
   name: 'account_signin',
   props: ['server_message'],
 data(){
   return{
-      settings: appsettings,
+      settings: '',
       alertTitle: '',
       alertMsg: '',
       showOverlay: false,
@@ -101,9 +100,17 @@ data(){
 
 },
 created(){
+  this.getAppSettings();
 },
 
 methods:{
+  getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
       signIn(){
           this.button='Please wait...';
           $(".toaster").toast('hide')

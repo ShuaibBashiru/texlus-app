@@ -33,7 +33,10 @@ class UserController extends Controller
     }
 
     public function profile($id){
+        $cookie_value = $id;
         $id = base64_decode(base64_decode($id));
+        $cookie_name = "manageUser";
+        setcookie($cookie_name, $cookie_value, time() + (86400), "/");
         $record = $this->record($id);
         if ($record['status']=='success') {
             $record = $record['info'];
@@ -48,6 +51,50 @@ class UserController extends Controller
 
     }
     
+    public function attachment($id){
+        $cookie_value = $id;
+        $id = base64_decode(base64_decode($id));
+        $cookie_name = "manageUser";
+        setcookie($cookie_name, $cookie_value, time() + (86400), "/");
+        $record = $this->record($id);
+        if ($record['status']=='success') {
+            $record = $record['info'];
+            return view('apps.user.attachment', compact('record'));
+        }else{
+            $message = [
+                "type" => "error",
+                "info" => "Something went wrong! refresh and continue.",
+             ];
+            return redirect()->route('dashboard')->with('message', json_encode($message));
+        }
+
+    }
+
+    public function edit_profile($id){
+        if (isset($_COOKIE['manageUser']) && ($id === $_COOKIE['manageUser'])) {
+            $id = base64_decode(base64_decode($id));
+            $record = $this->record($id);
+            if ($record['status']=='success') {
+                $record = $record['info'];
+                return view('apps.user.edit-profile', compact('record'));
+            }else{
+                $message = [
+                "type" => "info",
+                "info" => "",
+             ];
+                return redirect()->route('list_user')->with('message', json_encode($message));
+            }
+        }else{
+
+            $message = [
+                "type" => "info",
+                "info" => "",
+             ];
+            return redirect()->route('list_user')->with('message', json_encode($message));
+        }
+    }
+
+
     public function edit_name($id){
         if (isset($_COOKIE['manageUser']) && ($id === $_COOKIE['manageUser'])) {
             $id = base64_decode(base64_decode($id));
@@ -556,6 +603,94 @@ class UserController extends Controller
     
         }
 
+        public function update_profile(Request $request){
+            $request->validate([
+                'generated_id' => 'required',
+                'lastname' => 'required',
+                'firstname' => 'required',
+                'othername' => 'nullable',
+                'dob' => 'required|numeric',
+                'mob' => 'required|numeric',
+                'yob' => 'required|numeric',
+                'gender_id' => 'required|numeric',
+                'phone_code' => 'required',
+                'phone_two' => 'nullable|numeric',
+                'country_id' => 'required|numeric',
+                'state_id' => 'required|numeric',
+                'address_one' => 'nullable|string',
+            ]);
+            try {
+                $exist = false;
+                $failed = false;
+                $successful = false;
+                $getSession = $request->session()->get('securedata');
+                $id = base64_decode(base64_decode($request->input('generated_id')));
+                $d = new dateTime();
+                $dob = $request->input('dob');
+                $mob = $request->input('mob');
+                $yob = $request->input('yob');
+                $record = [
+                    "lastname" => ucfirst(strtolower($request->input('lastname'))),
+                    "firstname" => ucfirst(strtolower($request->input('firstname'))),
+                    "othername" => ucfirst(strtolower($request->input('othername'))),
+                    "dob" => $dob,
+                    "mob" => $mob,
+                    "yob" => $yob,
+                    "gender_id" => $request->input('gender_id'),
+                    "phone_two" => $request->input('phone_two'),
+                    "phone_code" => $request->input('phone_code'),
+                    "date_of_birth" => $dob.'/'.$mob.'/'.$yob,
+                    "country_id" => $request->input('country_id'),
+                    "state_id" => $request->input('state_id'),
+                    "address_one" => $request->input('address_one'),
+                    "modified_by" => base64_decode($getSession['userid']),
+                    "updated_at" => $d->format("Y-m-d h:i:s"),
+                ];
+                
+                    $update = User::
+                                    where('generated_id', '=', $id)
+                                        ->update($record);
+                    if ($update) {
+                    $successful = true;
+                    }else{
+                    $failed = true;
+                    }
+        
+                if ($successful) {
+                    $returnData = [
+                        "title" => "Successful",
+                        "status" => "success",
+                        "statusmsg" => "success",
+                        "msg" => "The record was successfully updated, please wait a moment while reloading the changes you made.",
+                        "redirect" => "",
+                    ];
+                } else{
+                    $returnData = [
+                        "title" => "Invalid",
+                        "status" => "failed",
+                        "statusmsg" => "",
+                        "msg" => "This record could not be updated! Please refresh and try again.",
+       ];
+                }
+        
+                $dataToJson = new ToJsonResource($returnData);
+                return $dataToJson;
+        
+        
+            } catch (Exception $e) {
+                $returnData = [
+                    "title" => "Invalid",
+                    "status" => "server error",
+                    "statusmsg" => "",
+                    "msg" => 'Something went wrong! Please check your network connection and try again or report this error for further assistance.',
+                    "error" => $e->message()
+                ];
+                $dataToJson = new ToJsonResource($returnData);
+                return $dataToJson;
+            }
+        
+        }
+
 
     public function update_name(Request $request){
         $request->validate([
@@ -572,6 +707,7 @@ class UserController extends Controller
             $id = base64_decode(base64_decode($request->input('generated_id')));
             $d = new dateTime();
             $record = [
+                "lastname" => ucfirst(strtolower($request->input('lastname'))),
                 "firstname" => ucfirst(strtolower($request->input('firstname'))),
                 "othername" => ucfirst(strtolower($request->input('othername'))),
                 "modified_by" => base64_decode($getSession['userid']),

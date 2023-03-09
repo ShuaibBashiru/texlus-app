@@ -269,7 +269,7 @@ class SettingController extends Controller
                     $updateRecord['logo_link'] = '';
                 }
                 if ($getRecord['status']) {
-                $query = Settings::where('generated_id', '=', $getRecord['data']['generated_id'])
+                $query = Settings::where('generated_id', '=', $userid)
                                     ->update($updateRecord);
                 }else{
                 $query = Settings::insert($record);

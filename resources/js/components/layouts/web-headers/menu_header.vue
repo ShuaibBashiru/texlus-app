@@ -10,14 +10,14 @@
 
 <ul class="nav m-0 p-0 ms-auto">
 <li class="nav-item navbar-toggler me-0 pe-2" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-<i class="bi bi-list" style="font-size: 1.8rem; color: black;"></i> </li>
+<i class="bi bi-list-check text-primary" style="font-size: 1.8rem; color: black;"></i> </li>
 </ul>
 
 <div class="collapse navbar-collapse" id="navbar">
 <div class="pb-1 mt-2 menudivider"></div>
     <ul class="navbar-nav m-0 p-0 ms-auto">
-        <li class="nav-item size-14 p-2"> <a href="/courses-pricing" class="text-dark linkUnderlineHover"> COURSES & PRICING </a> </li>
-        <li class="nav-item size-14 p-2"> <a href="/help" class="text-dark linkUnderlineHover">  <i class="bi bi-question-circle" role="button" aria-label="Help"></i> Help </a> </li>
+        <li class="nav-item m-0 p-2"> <a href="/signup" class="btn btn-primary"> <span class="size-13">CREATE AN ACCOUNT</span> </a> </li>
+        <li class="nav-item m-0 p-2"> <a href="/signin" class="btn btn-outline-primary"> <span class="size-13">SIGN IN</span> </a> </li>
     </ul>
 </div>
 
@@ -29,6 +29,9 @@
 <div class="collapse navbar-collapse" id="navbar">
 <div class="pb-1 mt-2 menudivider"></div>
     <ul class="navbar-nav m-0 p-0 ms-2">
+         <li class="nav-item m-0 p-2 btn-group fade-link">
+            <a href="/" class="linkUnderlineHover text-dark me-2"> <span> Home </span> </a>
+        </li>
         <li class="nav-item m-0 p-2 btn-group fade-link">
             <a href="/aboutus" class="linkUnderlineHover text-dark me-2"> <span> About Us </span> </a>
         </li>
@@ -39,10 +42,10 @@
             </a>
             <div class="dropdown-menu dropdown-menu-width border fade ps-3 pe-3 p-2 bg-light shadow" :id="'c'+d.id">
             <ul class="btn-toggle-nav list-unstyled p-0 m-0">
-            <li class="nav-item border-bottom mt-2" v-for="(d, index) in d.info" :key="index"> 
+              <li class="nav-item border-bottom mt-2" v-for="(d, index) in d.info" :key="index"> 
                 <a class="link-dark nav-link linkHover" :href="d.linkName" :target="d.link_target">
-                    <h6 class=""> <span class="bi bi-link"> </span> <span v-text="d.menuName"></span></h6>
-                <p class="mt-0 pt-0 mb-0 text-muted"><small v-html="d.descriptions"></small></p>
+                <h6 class="fw-bold mb-1 pb-1"> <span v-text="d.menuName"></span></h6>
+                <p class="mt-0 pt-0 mb-0 text-dark"><small v-html="d.descriptions"></small></p>
                 </a>
             </li>
             </ul>
@@ -53,11 +56,11 @@
             <a href="/contactus" class="linkUnderlineHover text-dark me-2"> <span> Contact Us </span> </a>
         </li>
     </ul>
-
+    
     <ul class="navbar-nav m-0 p-0 ms-auto">
-        <li class="nav-item m-0 p-2"> <a href="/app/signup" class="btn btn-primary"> <span class="size-13">CREATE AN ACCOUNT</span> </a> </li>
-        <li class="nav-item m-0 p-2"> <a href="/signin" class="btn btn-outline-primary"> <span class="size-13">SIGN IN</span> </a> </li>
+        <li class="nav-item size-14 mt-md-2 p-2 ps-3"> <a href="/projects" class="linkUnderline text-primary"> EXPLORE PROJECTS </a> </li>
     </ul>
+
 </div>
 
 
@@ -73,7 +76,6 @@
 
 
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
   name: "menu_header",
   props: ['server_message'],
@@ -89,16 +91,24 @@ export default {
         button: 'Log in',
         record: false,
         errors: [],
-        settings: appsettings,
+        settings: '',
         menuList: [
         ]
         }
         },
 
         mounted(){
+        this.getAppSettings();
         this.getMenus();
         },
         methods:{
+        getAppSettings: function(){
+            fetch('/storage/settings/app.json')
+            .then((response) => response.json())
+            .then((data) => {
+            this.settings = data;
+            });
+        },
         getMenus: function(){
             $(".toaster").toast('hide')
             axios.get('/api/menu', {params:this.parameters}).then(response => {

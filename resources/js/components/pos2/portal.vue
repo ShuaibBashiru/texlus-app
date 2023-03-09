@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import appsettings from '/storage/settings/app.json'
+
 export default {
     name: 'pointOfSale2',
     props: ['server_message'],
@@ -136,7 +136,7 @@ export default {
         return{
         pageName: 'POS',
         invoice_id: '',
-        settings: appsettings,
+        settings: '',
         alertTitle: '',
         alertMsg: '',
         showOverlay: false,
@@ -209,6 +209,7 @@ export default {
     },
 
     created(){
+        this.getAppSettings();
     },
 
     computed:{
@@ -219,7 +220,13 @@ export default {
     },
         
     methods:{
-    
+    getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+     },
     cancelBtn: function(){
             this.validated = false
             this.disabled = false

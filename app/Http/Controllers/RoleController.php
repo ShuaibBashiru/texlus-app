@@ -22,7 +22,10 @@ class RoleController extends Controller
             $record = $record['info'];
             return view('apps.role.manage', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_role')->with('message', json_encode($message));
         }
     }

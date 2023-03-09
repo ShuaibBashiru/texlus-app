@@ -5,15 +5,16 @@ window.Vue = require('vue').default;
 import { BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import VueSession from 'vue-session'
 import VueBarcode from 'vue-barcode'
-import Vue2Editor from "vue2-editor";
+import VueEditor from "vue2-editor"
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import VueHtmlToPaper from 'vue-html-to-paper';
+import VueHtmlToPaper from 'vue-html-to-paper'
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(Vue2Editor);
+Vue.use(VueEditor)
 
 Vue.component('barcode', VueBarcode)
 
@@ -53,20 +54,24 @@ Vue.component('banner', require('./components/web-components/banner.vue').defaul
 Vue.component('solution', require('./components/web-components/solution.vue').default);
 Vue.component('joinus', require('./components/web-components/joinus.vue').default);
 Vue.component('courses-slideshow', require('./components/web-components/courses-slideshow.vue').default);
-Vue.component('essential-course', require('./components/web-components/essential-course.vue').default);
+Vue.component('all-courses', require('./components/web-components/all-courses.vue').default);
 Vue.component('whatisnew', require('./components/web-components/whatisnew.vue').default);
 Vue.component('web-footer', require('./components/web-components/footer_menu.vue').default);
 Vue.component('tawkto', require('./components/support/tawkto.vue').default);
+Vue.component('courses', require('./components/landing/course-landing.vue').default);
+Vue.component('course-selected', require('./components/landing/course-selected.vue').default);
+Vue.component('auth-header-user', require('./components/layouts/user-headers/auth_header.vue').default);
 
 // includes 
-Vue.component('auth-header', require('./components/layouts/auths/auth_header.vue').default);
 Vue.component('menu-header', require('./components/layouts/web-headers/menu_header.vue').default);
+Vue.component('menu-header-auth', require('./components/layouts/web-headers/menu_header_auth.vue').default);
 Vue.component('menu-footer', require('./components/layouts/web-headers/menu_footer.vue').default);
 
-Vue.component('header-backend-general', require('./components/layouts/backend-headers/header_backend_general.vue').default);
+Vue.component('header-backend-general', require('./components/layouts/backend-headers/auth_header.vue').default);
 Vue.component('sidebar-backend-menu', require('./components/layouts/sidebars/sidebar_backend_menu.vue').default);
 Vue.component('flyout-backend-menu', require('./components/layouts/backend-headers/flyout_profile.vue').default);
 Vue.component('flyout-notification', require('./components/layouts/backend-headers/notification.vue').default);
+Vue.component('flyout-adminProfilePopUp', require('./components/layouts/flyout/adminProfilePopUp.vue').default);
 
 // Signup Controller
 Vue.component('signup-guide', require('./components/auths/signin.vue').default);
@@ -93,7 +98,6 @@ Vue.component('change-password', require('./components/auths/change_password.vue
 Vue.component('authentication', require('./components/auths/authentication.vue').default);
 Vue.component('authentication-failure', require('./components/auths/authenticationFailure.vue').default);
 
-
 //User controller
 Vue.component('upload_batch_user', require('./components/user/uploadbatch.vue').default);
 Vue.component('create_user', require('./components/user/newrecord.vue').default);
@@ -108,6 +112,13 @@ Vue.component('edit_user_contact_address', require('./components/user/edit_conta
 Vue.component('edit_user_gender', require('./components/user/edit_gender.vue').default);
 Vue.component('edit_user_password', require('./components/user/edit_password.vue').default);
 Vue.component('user_passport', require('./components/user/passport.vue').default);
+Vue.component('user-menu-list', require('./components/user/menuList.vue').default);
+Vue.component('edit-profile', require('./components/user/edit-profile.vue').default);
+Vue.component('back-button-user', require('./components/user/back-button.vue').default);
+Vue.component('user-attachment', require('./components/user/attachment.vue').default);
+
+// Profile header
+Vue.component('profile-header', require('./components/user/header-profile.vue').default);
 
 //Admin controller
 Vue.component('upload_batch_admin', require('./components/admin/uploadbatch.vue').default);
@@ -123,6 +134,8 @@ Vue.component('edit_admin_contact_address', require('./components/admin/edit_con
 Vue.component('edit_admin_gender', require('./components/admin/edit_gender.vue').default);
 Vue.component('edit_admin_password', require('./components/admin/edit_password.vue').default);
 Vue.component('admin_passport', require('./components/admin/passport.vue').default);
+// Vue.component('back-button-admin', require('./components/admin/back-button.vue').default);
+
 
 // Account controller
 Vue.component('create_account', require('./components/account/newrecord.vue').default);
@@ -142,6 +155,13 @@ Vue.component('manage_role', require('./components/role/manage.vue').default);
 Vue.component('delete_role', require('./components/role/delete.vue').default);
 Vue.component('create_role', require('./components/role/newrecord.vue').default);
 Vue.component('edit_role', require('./components/role/edit.vue').default);
+
+//Statuses controller
+Vue.component('statuses_record', require('./components/statuses/record.vue').default);
+Vue.component('statuses_manage', require('./components/statuses/manage.vue').default);
+Vue.component('statuses_delete', require('./components/statuses/delete.vue').default);
+Vue.component('statuses_create', require('./components/statuses/newrecord.vue').default);
+Vue.component('statuses_edit', require('./components/statuses/edit.vue').default);
 
 //Access controller
 Vue.component('upload_batch_access', require('./components/access/uploadbatch.vue').default);
@@ -164,6 +184,17 @@ Vue.component('manage_admin_menu', require('./components/admin_menu/manage.vue')
 Vue.component('delete_admin_menu', require('./components/admin_menu/delete.vue').default);
 Vue.component('create_admin_menu', require('./components/admin_menu/newrecord.vue').default);
 Vue.component('edit_admin_menu', require('./components/admin_menu/edit.vue').default);
+
+// Enrolled
+Vue.component('enrolled_record', require('./components/enrolled/record.vue').default);
+Vue.component('manage_enrolled', require('./components/enrolled/manage.vue').default);
+Vue.component('create_enrolled', require('./components/enrolled/newrecord.vue').default);
+Vue.component('edit_enrolled', require('./components/enrolled/edit.vue').default);
+Vue.component('payment_history', require('./components/enrolled/payments.vue').default);
+
+// Progress
+Vue.component('course_progress', require('./components/progress/progress.vue').default);
+Vue.component('update-progress', require('./components/progress/update-progress.vue').default);
 
 //Role permission controller
 Vue.component('role_permissions', require('./components/role_permissions/record.vue').default);
@@ -194,6 +225,18 @@ Vue.component('manage_post', require('./components/posts/manage.vue').default);
 Vue.component('delete_post', require('./components/posts/delete.vue').default);
 Vue.component('create_post', require('./components/posts/newrecord.vue').default);
 Vue.component('edit_post', require('./components/posts/edit.vue').default);
+
+//news_category controller
+Vue.component('category_record_news', require('./components/news_category/record.vue').default);
+Vue.component('create_news_category', require('./components/news_category/newrecord.vue').default);
+Vue.component('edit-news-category', require('./components/news_category/edit.vue').default);
+
+//News controller
+Vue.component('record_news', require('./components/news/record.vue').default);
+Vue.component('manage_news', require('./components/news/manage.vue').default);
+Vue.component('delete_news', require('./components/news/delete.vue').default);
+Vue.component('create_news', require('./components/news/newrecord.vue').default);
+Vue.component('edit_news', require('./components/news/edit.vue').default);
 
 //Media controller
 Vue.component('media_record', require('./components/media/record.vue').default);
@@ -231,6 +274,10 @@ Vue.component('pos_record2', require('./components/pos2/record.vue').default);
 
 Vue.component('no_access', require('./components/errors/no_access.vue').default);
 Vue.component('page_not_found', require('./components/errors/pageNotFound.vue').default);
+
+
+// Includes
+
 
 
 

@@ -23,14 +23,13 @@
     </div>
 </template>
 <script>
-import appsettings from '/storage/settings/app.json'
 export default {
     name: 'authentication-failure',
     props: ['server_message'],
     
 data(){
     return{
-        settings: appsettings,
+        settings: '',
         alertTitle: '',
         alertMsg: '',
         showOverlay: false,
@@ -46,8 +45,16 @@ data(){
 },
 
 created(){
+    this.getAppSettings();
 },
     methods:{
+        getAppSettings: function(){
+        fetch('/storage/settings/app.json')
+        .then((response) => response.json())
+        .then((data) => {
+           this.settings = data;
+        });
+    },
     },
 
 }

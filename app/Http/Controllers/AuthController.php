@@ -28,7 +28,8 @@ class AuthController extends Controller
                         ->join('admin_passwords as t2', 't1.id', '=', 't2.userid')
                         ->where('t1.email_one', '=', $email)
                         ->where('t2.pwd_auth_hash', '=', $pwd)
-                        ->get(['t1.id', 't1.lastname', 't1.role_id', 't1.file_url', 't1.generated_id', 't1.firstname', 't1.othername', 't1.email_one'])
+                        ->get(['t1.id', 't1.lastname', 't1.role_id', 't1.file_url', 't1.generated_id', 
+                        't1.firstname', 't1.othername', 't1.email_one', 't1.role_name'])
                         ->first();
                         
             if ($user) {

@@ -16,7 +16,7 @@ class ConfirmReLogIn
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->session()->has('userdata')) {
+        if($request->session()->has('adminSessionData')) {
             return redirect('/app/logout');
          }else{
             return $next($request);

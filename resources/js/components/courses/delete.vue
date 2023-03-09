@@ -37,7 +37,7 @@
         <p class="p-1 m-0 text-danger"><small>This action is irreversible, are you sure you want to delete this?</small></p>
       <div class="alert alert-primary border-0" role="alert">
   <h6 class="" v-text="'Category: '+ (info? info.category_name : '') "></h6>
-  <h6 class="" v-text="'Content title: '+ (info? info.post_title : '') "></h6>
+  <h6 class="" v-text="'Content title: '+ (info? info.item_title : '') "></h6>
 </div>
 
   <div class="alert alert-info border-0 p-1 ps-2 pe-2 text-center" role="alert" v-if="alertMsg!=''">
@@ -73,7 +73,7 @@ export default {
         deleted: false,
         warning: 'This action is irreversible, do you really want to delete this record?',
         parameters:{
-            post_title: '',
+            item_title: '',
             id: '',
         },
       }
@@ -83,7 +83,7 @@ export default {
     trashItem: function(){
             this.showOverlay=false;
             this.alertMsg = '';
-            this.parameters.post_title = this.info.post_title
+            this.parameters.item_title = this.info.item_title
             this.parameters.id = this.info.generated_id
             this.button = "Please wait..."
             axios.delete('/course/trash', {params:this.parameters}).then(response => {

@@ -20,9 +20,7 @@
         <!-- Body component(s) -->
             <div id="contentPanel" class="col-md-10 p-0 mt-5">
             <div class="mb-5 mt-4">
-                
-           <user_passport :server_record="{{ session('record') ?? $record ?? json_encode('') }}"> </user_passport>
-           <manage_user :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"></manage_user>
+           <manage_user :server_message="{{ session('message') ?? $message ?? json_encode('') }}" :server_record="{{ session('record') ?? $record ?? json_encode('') }}"> </manage_user>
            <delete_user :server_record="{{ session('record') ?? $record ?? json_encode('') }}"> </delete_user>
     </div>
 

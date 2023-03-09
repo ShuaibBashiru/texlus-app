@@ -6,13 +6,13 @@
         <div class="border rounded-3 p-1 pt-0 pb-0">
           <div class="row m-0 p-0 pb-1 pt-1">
               <div class="col-md-6">
-            <h6 class="m-0 pt-2" v-text="chartOptions.chartTitle"></h6> 
+            <h6 class="m-0 pt-2 mt-2 mb-2" v-text="chartOptions.chartTitle"></h6> 
           </div>
               <div class="col-md-6 pe-0 dropdown">
-            <button class="btn float-end me-2 pt-1 pb-1 btn-outline-primary" @click="getRecords"><i class="bi-arrow-clockwise"></i> 
+            <button class="btn float-end me-2 mt-2 mb-2 pt-1 pb-1 btn-outline-primary" @click="getRecords"><i class="bi-arrow-clockwise"></i> 
             <span v-text="button"> </span> <span v-if="loadStatus=='load'" class="spinner-border spinner-border-sm text-primary"></span>
             </button>
-            <input type="date" title="Filter" v-model="selectedDate" class="btn float-end me-2 pt-1 pb-1 btn-outline-primary" @input="getRecords">
+            <input type="date" title="Filter" v-model="selectedDate" class="btn float-end me-2 mt-2 mb-2 pt-1 pb-1 btn-outline-primary" @input="getRecords">
         </div>
       </div>
       </div>

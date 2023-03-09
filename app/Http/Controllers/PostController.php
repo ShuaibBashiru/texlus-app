@@ -22,7 +22,10 @@ class PostController extends Controller
             $record = $record['info'];
             return view('apps.posts.manage', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_post')->with('message', json_encode($message));
         }
     }
@@ -36,7 +39,10 @@ class PostController extends Controller
             $record = $record['info'];
             return view('apps.posts.edit', compact('record'));
         }else{
-            $message = json_encode("No record found");
+            $message = [
+                "type" => "",
+                "info" => "No record found",
+             ];
             return redirect()->route('list_post')->with('message', json_encode($message));
         }
     }
@@ -173,7 +179,7 @@ class PostController extends Controller
 
     public function uploadDisplayFile(Request $request, $id){
         $request->validate([
-            'upload_file' => 'required|mimes:jpeg,png,gif,webp,mp4,mkv|max:2000',
+            'upload_file' => 'required|mimes:jpeg,png,gif,pdf,docx,doc,ppt,webp,mp4,mkv|max:2000',
         ]);
 
         $exist = false;

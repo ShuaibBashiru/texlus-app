@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import phonecodes from '../json/phoneCode'
+import phonecodes from '/storage/json/phoneCode'
 export default {
     name: 'Media_Edit',
     props: ['server_record', 'server_message'],

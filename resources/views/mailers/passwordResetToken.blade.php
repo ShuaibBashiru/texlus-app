@@ -13,7 +13,6 @@
   </div>
 <!--  -->
   <div>
-    <p>Reset link: <a href="{{url($link)}}">Click here to continue.</a> </p>
     <p>To reset your account's password, please click on the link: <br> <a href="{{url($link)}}">{{url($link)}}</a> </p>
   </div>
 <!--  -->
